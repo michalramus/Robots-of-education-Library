@@ -61,5 +61,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# Build folder
+# Build folders
 obj/
+bin/
