@@ -33,7 +33,7 @@ namespace ROELibrary
                 }
             }
 
-            //TODO: log error and add more informations
+            //TODO: log error and add more information
             var Exception = new KeyNotFoundException();
 
             throw Exception;
