@@ -5,10 +5,10 @@ namespace ROELibrary
 {
     public class SerialCommunication : ICommunication
     {
-        SerialPort _serialPort;
+        ISerialPort _serialPort;
 
         //TODO: set JsonDeserializer
-        SerialCommunication(SerialPort serialPort)
+        public SerialCommunication(ISerialPort serialPort)
         {
             _serialPort = serialPort;
         }
@@ -53,7 +53,7 @@ namespace ROELibrary
             {
 
                 //read message
-                if (_serialPort.BytesToRead > 0)
+                if (_serialPort.BytesToRead() > 0)
                 {
                     try
                     {
