@@ -2,7 +2,7 @@ using System.IO.Ports;
 
 namespace ROELibrary
 {
-    public class SerialPortFacade : ISerialPort
+    class SerialPortFacade : ISerialPort
     {
         SerialPort _serialPort;
         public SerialPortFacade(SerialPort serialPort)
