@@ -75,7 +75,8 @@ namespace ROELibrary
             }
             else
             {
-                //TODO: throw exception
+                //TODO: extra information in exception
+                throw new IncorrectMessageException();
             }
 
             return message;
