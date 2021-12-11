@@ -21,5 +21,10 @@ namespace ROELibrary
         {
             _serialPort.Write(test);
         }
+
+        public bool IsOpen()
+        {
+            return _serialPort.IsOpen;
+        }
     }
 }

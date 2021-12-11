@@ -5,6 +5,7 @@ namespace ROELibrary
         string ReadLine();
         int BytesToRead();
         void Write(string test);
+        bool IsOpen();
     }
 
 }
