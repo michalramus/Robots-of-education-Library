@@ -15,8 +15,7 @@ namespace ROELibrary
         public void SendMessage(string message)
         {
             //add startEndMessage symbol to message
-            message.Insert(0, SymbolsBase.GetSymbol(SymbolsIDs.startEndMessage));
-            message += SymbolsBase.GetSymbol(SymbolsIDs.startEndMessage);
+            message = SymbolsBase.GetSymbol(SymbolsIDs.startEndMessage) + message + SymbolsBase.GetSymbol(SymbolsIDs.startEndMessage);
 
             try
             {
@@ -24,11 +23,7 @@ namespace ROELibrary
             }
             catch (InvalidOperationException e)
             {
-                //TODO: handle exception
-            }
-            catch (Exception e)
-            {
-                //TODO: handle exception
+                //TODO: add more information to exception
             }
         }
 
