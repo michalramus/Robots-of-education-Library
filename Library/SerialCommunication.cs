@@ -12,18 +12,7 @@ namespace ROELibrary
             _serialPort = serialPort;
         }
 
-        /// <summary>
-        /// messageJson parameter has to be convertible to Json
-        /// </summary>
-        /// <param name="messageJson"></param>
-        public void SendMessage(IMessage messageJson)
-        {
-            //TODO:
-        }
-
-
-
-        private void SendMessage(string message)
+        public void SendMessage(string message)
         {
             //add startEndMessage symbol to message
             message.Insert(0, SymbolsBase.GetSymbol(SymbolsIDs.startEndMessage));
