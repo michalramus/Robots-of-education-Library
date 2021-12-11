@@ -16,12 +16,12 @@ namespace ROELibrary
         /// messageJson parameter has to be convertible to Json
         /// </summary>
         /// <param name="messageJson"></param>
-        public void SendMessage(IMessage messageJson) 
+        public void SendMessage(IMessage messageJson)
         {
             //TODO:
         }
 
-        
+
 
         private void SendMessage(string message)
         {
@@ -50,19 +50,20 @@ namespace ROELibrary
 
             while (messageReceived == false)
             {
-
-                //read message
-                if (_serialPort.BytesToRead() > 0)
+                if (_serialPort.IsOpen() == true)
                 {
-                    try
+                    //read message
+                    if (_serialPort.BytesToRead() > 0)
                     {
-                        message = _serialPort.ReadLine();
-                        messageReceived = true;
+                            message = _serialPort.ReadLine();
+                            messageReceived = true;
+                        
                     }
-                    catch (InvalidOperationException e)
-                    {
-                        //TODO: handle exception
-                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException();
+                    //TODO: add more information to exception
                 }
             }
 
@@ -71,7 +72,6 @@ namespace ROELibrary
             {
                 message = message.TrimStart(SymbolsBase.GetSymbol(SymbolsIDs.startEndMessage)[0]);
                 message = message.TrimEnd(SymbolsBase.GetSymbol(SymbolsIDs.startEndMessage)[0]);
-                //TODO:
             }
             else
             {
