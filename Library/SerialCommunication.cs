@@ -1,9 +1,8 @@
 ﻿using System;
-using System.IO.Ports;
 
 namespace ROELibrary
 {
-    public class SerialCommunication : ICommunication
+    class SerialCommunication : ICommunication
     {
         ISerialPort _serialPort;
 

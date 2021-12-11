@@ -1,6 +1,6 @@
 namespace ROELibrary
 {
-    public interface ICommunication
+    interface ICommunication
     {
 
         void SendMessage(IMessage message);

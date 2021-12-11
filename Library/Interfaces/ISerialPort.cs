@@ -1,10 +1,10 @@
 namespace ROELibrary
 {
-    public interface ISerialPort
+    interface ISerialPort
     {
-    string ReadLine();
-    int BytesToRead();
-    void Write(string test);
+        string ReadLine();
+        int BytesToRead();
+        void Write(string test);
     }
 
 }
