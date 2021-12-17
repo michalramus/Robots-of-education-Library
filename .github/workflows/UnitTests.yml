@@ -1,0 +1,22 @@
+
+name: Start unit tests
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  startUnitTests-macOs:
+    runs-on: macos-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v1.9.0
+        with:
+          dotnet-version: 6.x.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Enter to unit tests folder
+        run: cd UnitTests
+      - name: Run tests
