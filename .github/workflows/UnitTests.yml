@@ -20,3 +20,4 @@ jobs:
       - name: Enter to unit tests folder
         run: cd UnitTests
       - name: Run tests
+        run: dotnet test
