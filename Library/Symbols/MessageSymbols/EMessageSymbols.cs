@@ -1,4 +1,4 @@
-enum EMessageType
+enum EMessageSymbols
 {
     //Message and MessageContainers types
     //msg - message
