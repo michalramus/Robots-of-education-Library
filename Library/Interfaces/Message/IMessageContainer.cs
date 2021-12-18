@@ -2,6 +2,6 @@ namespace ROELibrary
 {
     interface IMessageContainer
     {
-        SymbolsIDs getType();
+        EMessageType getContainerType();
     }
 }
