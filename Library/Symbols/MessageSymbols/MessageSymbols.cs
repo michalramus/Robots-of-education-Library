@@ -5,7 +5,7 @@ namespace ROELibrary
 {
     class MessageSymbols
     {
-        public Symbols<EMessageSymbols> symbols = new Symbols<EMessageSymbols>(
+        public static Symbols<EMessageSymbols> symbols = new Symbols<EMessageSymbols>(
             new Dictionary<EMessageSymbols, string>
             {
                 {EMessageSymbols.msgTypeConfig, "conf"},
