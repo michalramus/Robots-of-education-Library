@@ -3,7 +3,7 @@ using Xunit;
 using ROELibrary;
 
 
-namespace SymbolsTests
+namespace UnitTests
 {
     public class SymbolsTests
     {
