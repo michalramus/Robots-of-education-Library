@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace ROELibrary
 {
-    class Symbols<T>
+    class Symbols<T> : ISymbols<T> where T : notnull
     {
-        Dictionary<T, string> pairs;
+        Dictionary<T, string> pairs = new Dictionary<T, string>();
 
         /// <summary>
         ///Set up key-value pairs of symbols
