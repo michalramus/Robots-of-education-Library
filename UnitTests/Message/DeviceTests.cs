@@ -65,7 +65,7 @@ namespace UnitTests.Message
         [InlineData((int)ERobotsSymbols.car, 88, 45, 32)]
         [InlineData((int)ERobotsSymbols.car, 3, 20, 31, 42)]
         [InlineData((int)ERobotsSymbols.car, 7, 77, 14, 91, 22, 37, 14)]
-        public void SerializeToJsonObject_SerializeNotSetDeviceID_ThrowException(int devType, params int[] pins)
+        public void SerializeToJsonObject_NotSetDeviceID_ThrowException(int devType, params int[] pins)
         {
             //Arrange
             List<uint> pinsList = new List<uint>(); //rewrite pins list to uint type, because can't project to uint
@@ -106,7 +106,7 @@ namespace UnitTests.Message
         [InlineData(9086, 88, 45, 32)]
         [InlineData(33, 3, 20, 31, 42)]
         [InlineData(0, 7, 77, 14, 91, 22, 37, 14)]
-        public void SerializeToJsonObject_SerializeNotSetDeviceType_ThrowException(uint devId, params int[] pins)
+        public void SerializeToJsonObject_NotSetDeviceType_ThrowException(uint devId, params int[] pins)
         {
             //Arrange
             List<uint> pinsList = new List<uint>(); //rewrite pins list to uint type, because can't project to uint
@@ -147,7 +147,7 @@ namespace UnitTests.Message
         [InlineData(9086, (int)ERobotsSymbols.car)]
         [InlineData(33, (int)ERobotsSymbols.car)]
         [InlineData(0, (int)ERobotsSymbols.car)]
-        public void SerializeToJsonObject_SerializeNotSetPins_ThrowException(uint devId, int devType)
+        public void SerializeToJsonObject_NotSetPins_ThrowException(uint devId, int devType)
         {
             //Arrange
             Device device = new Device();
@@ -167,7 +167,7 @@ namespace UnitTests.Message
         }
 
         [Fact]
-        public void SerializeToJsonObject_SerializeNotSetEverythink_ThrowException()
+        public void SerializeToJsonObject_NotSetEverythink_ThrowException()
         {
             //Arrange
             Device device = new Device();
