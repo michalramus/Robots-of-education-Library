@@ -18,7 +18,7 @@ namespace UnitTests
         public void SendMessage_SendCorrectMessage_ReturnMessage(string message)
         {
             //arrange
-            string startEndSymbol = SymbolsBase.GetSymbol(SymbolsIDs.startEndMessage);
+            string startEndSymbol = MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage);
             var serialPort = new Mock<ISerialPort>();
             serialPort.Setup(x => x.Write(It.IsAny<string>()));
             
@@ -48,7 +48,7 @@ namespace UnitTests
             //mock
             var serialPort = new Mock<ISerialPort>();
 
-            serialPort.Setup(x => x.ReadLine()).Returns(SymbolsBase.GetSymbol(SymbolsIDs.startEndMessage) + messageWithoutSymbol + SymbolsBase.GetSymbol(SymbolsIDs.startEndMessage));
+            serialPort.Setup(x => x.ReadLine()).Returns(MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage) + messageWithoutSymbol + MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage));
             serialPort.Setup(x => x.IsOpen()).Returns(true);
             serialPort.SetupSequence(x => x.BytesToRead())
             .Returns(5) //higher than 0

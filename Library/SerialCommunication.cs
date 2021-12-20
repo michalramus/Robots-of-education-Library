@@ -15,7 +15,7 @@ namespace ROELibrary
         public void SendMessage(string message)
         {
             //add startEndMessage symbol to message
-            message = SymbolsBase.GetSymbol(SymbolsIDs.startEndMessage) + message + SymbolsBase.GetSymbol(SymbolsIDs.startEndMessage);
+            message = MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage) + message + MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage);
 
             try
             {
@@ -52,10 +52,10 @@ namespace ROELibrary
             }
 
             //check if message was correctly received
-            if ((message[0] == SymbolsBase.GetSymbol(SymbolsIDs.startEndMessage)[0]) && (message[message.Length - 1] == SymbolsBase.GetSymbol(SymbolsIDs.startEndMessage)[0]))
+            if ((message[0] == MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage)[0]) && (message[message.Length - 1] == MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage)[0]))
             {
-                message = message.TrimStart(SymbolsBase.GetSymbol(SymbolsIDs.startEndMessage)[0]);
-                message = message.TrimEnd(SymbolsBase.GetSymbol(SymbolsIDs.startEndMessage)[0]);
+                message = message.TrimStart(MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage)[0]);
+                message = message.TrimEnd(MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage)[0]);
             }
             else
             {

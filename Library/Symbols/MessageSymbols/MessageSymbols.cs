@@ -8,6 +8,9 @@ namespace ROELibrary
         public static Symbols<EMessageSymbols> symbols = new Symbols<EMessageSymbols>(
             new Dictionary<EMessageSymbols, string>
             {
+                {EMessageSymbols.startEndMessage, "x"}, //it has to have maximally 1 character
+
+
                 {EMessageSymbols.msgTypeConfig, "conf"},
 
                 {EMessageSymbols.msgTypeTask, "task"},
