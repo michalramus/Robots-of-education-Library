@@ -9,7 +9,7 @@ namespace ROELibrary
             new Dictionary<ERobotsSymbols, string>
             {
                 //universal symbols
-                {ERobotsSymbols.devType, "type"},
+                {ERobotsSymbols.devType, "devType"},
                 {ERobotsSymbols.devID, "ID"},
                 {ERobotsSymbols.pins, "pins"},
 
