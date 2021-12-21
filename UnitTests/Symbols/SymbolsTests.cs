@@ -75,6 +75,7 @@ namespace UnitTests
             Assert.Equal(typeof(int), result.Data["Symbol type"]);
         }
 
+        [Theory]
         [InlineData(1, "1")]
         [InlineData(15, "key")]
         [InlineData(37, "symbol15 8")]

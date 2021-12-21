@@ -83,7 +83,7 @@ namespace UnitTests.Message
 
             Assert.Equal("Device container is not correctly set", ex.Message);
 
-            Assert.Equal(null, ex.Data["devID"]);
+            Assert.Null(ex.Data["devID"]);
             Assert.Equal((ERobotsSymbols)devType, ex.Data["devType"]);
             Assert.Equal(pinsList, ex.Data["pins"]);
 
@@ -125,13 +125,12 @@ namespace UnitTests.Message
             Assert.Equal("Device container is not correctly set", ex.Message);
 
             Assert.Equal(devId, ex.Data["devID"]);
-            Assert.Equal(null, ex.Data["devType"]);
+            Assert.Null(ex.Data["devType"]);
             Assert.Equal(pinsList, ex.Data["pins"]);
 
         }
 
         [Theory]
-        [InlineData(0, (int)ERobotsSymbols.car)]
         [InlineData(15, (int)ERobotsSymbols.car)]
         [InlineData(7843, (int)ERobotsSymbols.car)]
         [InlineData(1008, (int)ERobotsSymbols.car)]
@@ -177,8 +176,8 @@ namespace UnitTests.Message
 
             Assert.Equal("Device container is not correctly set", ex.Message);
 
-            Assert.Equal(null, ex.Data["devID"]);
-            Assert.Equal(null, ex.Data["devType"]);
+            Assert.Null(ex.Data["devID"]);
+            Assert.Null(ex.Data["devType"]);
             Assert.Equal(new int[0], ex.Data["pins"]);
         }
     }
