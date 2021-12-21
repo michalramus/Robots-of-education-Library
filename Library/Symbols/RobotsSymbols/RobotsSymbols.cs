@@ -11,12 +11,30 @@ namespace ROELibrary
                 //universal symbols
                 {ERobotsSymbols.devType, "devType"},
                 {ERobotsSymbols.devID, "ID"},
+
+                //config
                 {ERobotsSymbols.pins, "pins"},
+
+                //task
+                {ERobotsSymbols.task, "task"},
+                {ERobotsSymbols.extraValuesNumber, "exValNum"},
+                {ERobotsSymbols.extraValues, "exVal"},
+
 
                 //symbols for concrete robot
                 
                 //car
                 {ERobotsSymbols.car, "car"},
+                {ERobotsSymbols.taskCarGo, "tCarGo"},
+                {ERobotsSymbols.taskCarTurn, "tCarTurn"},
+
+                {ERobotsSymbols.valCarSpeed, "vCarSpeed"},
+                {ERobotsSymbols.valCarDistance, "vCarDist"},
+                {ERobotsSymbols.valCarRotationalSpeed, "vCarRotSpeed"},
+                {ERobotsSymbols.valCarDirection, "vCarDirec"},
+
+                {ERobotsSymbols.valCarGoTime, "vCarGoTime"},
+                {ERobotsSymbols.valCarTurnTime, "vCarTurnTime"},
             }
         );
     }

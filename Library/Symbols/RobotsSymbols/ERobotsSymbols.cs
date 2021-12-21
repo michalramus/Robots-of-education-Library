@@ -5,11 +5,31 @@ enum ERobotsSymbols
     //universal symbols
     devType,
     devID,
+
+    //config
     pins,
+
+    //task
+    task,
+    extraValuesNumber,
+    extraValues,
+
 
     //symbols for concrete robot
 
-    //car
+    //CAR
     car,
+    //task
+    taskCarGo,
+    taskCarTurn,
+    //values
+    valCarSpeed,
+    valCarDistance,
+    valCarRotationalSpeed,
+    valCarDirection,
+    //calibration
+    valCarGoTime, //time when car ride 1 meter
+    valCarTurnTime, //time when car turn 90 degrees
+
 
 }
