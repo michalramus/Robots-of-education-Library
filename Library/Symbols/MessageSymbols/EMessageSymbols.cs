@@ -15,6 +15,10 @@ enum EMessageSymbols
 
     msgTypeError,
     contTypeError, //don't have symbol
+    errorType,
+    errorMessage,
+    errorValue,
+    firmwareVersion,
 
     msgTypeInformation,
     contTypeInformation,//don't have symbol 

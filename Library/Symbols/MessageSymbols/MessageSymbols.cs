@@ -15,7 +15,11 @@ namespace ROELibrary
 
                 {EMessageSymbols.msgTypeTask, "task"},
 
-                {EMessageSymbols.msgTypeError, "err"},
+                {EMessageSymbols.msgTypeError, "error"},
+                {EMessageSymbols.errorType, "errorType"},
+                {EMessageSymbols.errorMessage, "errMsg"},
+                {EMessageSymbols.errorValue, "errValue"},
+                {EMessageSymbols.firmwareVersion, "firmVer"},
 
                 {EMessageSymbols.msgTypeInformation, "info"},
             }
