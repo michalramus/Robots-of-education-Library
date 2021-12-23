@@ -5,7 +5,7 @@ enum EMessageSymbols
     //cont - container
 
     startEndMessage, //it has to have maximally 1 character
-
+    messageType,
 
     msgTypeConfig,
     contTypeDevice, //don't have symbol

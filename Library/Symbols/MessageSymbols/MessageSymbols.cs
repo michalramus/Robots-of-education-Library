@@ -9,7 +9,7 @@ namespace ROELibrary
             new Dictionary<EMessageSymbols, string>
             {
                 {EMessageSymbols.startEndMessage, "x"}, //it has to have maximally 1 character
-
+                {EMessageSymbols.messageType, "type"},
 
                 {EMessageSymbols.msgTypeConfig, "conf"},
 
