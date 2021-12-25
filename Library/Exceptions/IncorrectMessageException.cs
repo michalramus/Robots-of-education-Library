@@ -1,6 +1,6 @@
 using System;
 
-//error generated, when message is in incorrect format
+//error generated, when received message is in incorrect format
 
 namespace ROELibrary
 {
