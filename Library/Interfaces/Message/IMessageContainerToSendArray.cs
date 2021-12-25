@@ -4,6 +4,6 @@ namespace ROELibrary
 {
     interface IMessageContainerToSendArray : IMessageContainer //object that can be sended
     {
-        JArray serializeToJsonObject();
+        JArray serializeToJsonArray();
     }
 }

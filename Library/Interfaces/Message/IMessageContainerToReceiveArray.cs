@@ -4,6 +4,6 @@ namespace ROELibrary
 {
     interface IMessageContainerToReceiveArray : IMessageContainer //object that can be received
     {
-        void deserializeFromJsonObject(JArray json);
+        void deserializeFromJsonArray(JArray json);
     }
 }

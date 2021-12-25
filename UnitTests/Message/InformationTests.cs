@@ -7,13 +7,13 @@ namespace UnitTests.Message
 {
     public class InformationTests
     {
-        public static IEnumerable<object[]> Data_SerializeToJsonObject_SerializeInformation_ReturnCorrectJson() //TODO: add more tests
+        public static IEnumerable<object[]> Data_SerializeToJsonArray_SerializeInformation_ReturnCorrectJson() //TODO: add more tests
         {
             yield return new object[] { new List<List<object>>() { new List<object> {EInformationSymbols.getFirmwareVersion}}, "[[\"firmVer\",\"get\"]]" };
         }
         [Theory]
-        [MemberData(nameof(Data_SerializeToJsonObject_SerializeInformation_ReturnCorrectJson))]
-        public void SerializeToJsonObject_SerializeInformation_ReturnCorrectJson(List<List<object>> data, string json)
+        [MemberData(nameof(Data_SerializeToJsonArray_SerializeInformation_ReturnCorrectJson))]
+        public void SerializeToJsonArray_SerializeInformation_ReturnCorrectJson(List<List<object>> data, string json)
         {
             //Arrange
             Information information = new Information();
@@ -32,7 +32,7 @@ namespace UnitTests.Message
             }
 
             //Act
-            JArray jArray = information.serializeToJsonObject();
+            JArray jArray = information.serializeToJsonArray();
             string result = jArray.ToString();
             result = result.Replace(" ", "")
                     .Replace("\n", "");
@@ -48,7 +48,7 @@ namespace UnitTests.Message
             Information information = new Information();
 
             //Act & Assert
-            var ex = Assert.Throws<MsgContainerNotSetException>(() => information.serializeToJsonObject());
+            var ex = Assert.Throws<MsgContainerNotSetException>(() => information.serializeToJsonArray());
             Assert.Equal("Information container doesn't have any settings", ex.Message);
         }
     }

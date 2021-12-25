@@ -43,7 +43,7 @@ namespace ROELibrary
         }
 
 
-        public JArray serializeToJsonObject()
+        public JArray serializeToJsonArray()
         {
             if (settings.Count == 0)
             {
