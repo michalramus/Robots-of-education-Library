@@ -8,10 +8,10 @@ enum EMessageSymbols
     messageType,
 
     msgTypeConfig,
-    contTypeDevice, //don't have symbol
+    contTypeDevice,
 
     msgTypeTask,
-    contTypeTask, //don't have symbol
+    contTypeTask,
 
     msgTypeError,
     contTypeError, //don't have symbol
@@ -21,6 +21,6 @@ enum EMessageSymbols
     firmwareVersion,
 
     msgTypeInformation,
-    contTypeInformation,//don't have symbol 
+    contTypeInformation,
 
 }

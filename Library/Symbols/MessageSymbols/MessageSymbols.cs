@@ -12,8 +12,10 @@ namespace ROELibrary
                 {EMessageSymbols.messageType, "type"},
 
                 {EMessageSymbols.msgTypeConfig, "conf"},
+                {EMessageSymbols.contTypeDevice, "dev"},
 
                 {EMessageSymbols.msgTypeTask, "task"},
+                {EMessageSymbols.contTypeTask, "tasks"},
 
                 {EMessageSymbols.msgTypeError, "error"},
                 {EMessageSymbols.errorType, "errorType"},
@@ -22,6 +24,7 @@ namespace ROELibrary
                 {EMessageSymbols.firmwareVersion, "firmVer"},
 
                 {EMessageSymbols.msgTypeInformation, "info"},
+                {EMessageSymbols.contTypeInformation, "data"}
             }
         );
     }
