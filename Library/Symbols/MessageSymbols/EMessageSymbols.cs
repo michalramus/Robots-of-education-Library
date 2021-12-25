@@ -22,5 +22,7 @@ enum EMessageSymbols
 
     msgTypeInformation,
     contTypeInformation,
+    getSetting,
+    setSetting,
 
 }

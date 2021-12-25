@@ -24,7 +24,9 @@ namespace ROELibrary
                 {EMessageSymbols.firmwareVersion, "firmVer"},
 
                 {EMessageSymbols.msgTypeInformation, "info"},
-                {EMessageSymbols.contTypeInformation, "data"}
+                {EMessageSymbols.contTypeInformation, "data"},
+                {EMessageSymbols.getSetting, "get"},
+                {EMessageSymbols.setSetting, "set"}
             }
         );
     }
