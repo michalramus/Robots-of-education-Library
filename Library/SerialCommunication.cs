@@ -6,20 +6,21 @@ namespace ROELibrary
     {
         ISerialPort _serialPort;
 
-        //TODO: set JsonDeserializer
         public SerialCommunication(ISerialPort serialPort)
         {
             _serialPort = serialPort;
         }
 
-        public void SendMessage(string message)
+        public void SendMessage(IMessage message)
         {
+            string json = message.SerializeToJson();
+
             //add startEndMessage symbol to message
-            message = MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage) + message + MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage);
+            json = MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage) + json + MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage);
 
             try
             {
-                _serialPort.Write(message);
+                _serialPort.Write(json);
             }
             catch (InvalidOperationException e)
             {
@@ -27,9 +28,10 @@ namespace ROELibrary
             }
         }
 
-        public string ReceiveMessage()
+        public IMessage ReceiveMessage(IMessage emptyMessage)
         {
-            string message = "";
+            //TODO: use IoC container
+            string json = "";
             bool messageReceived = false;
 
             while (messageReceived == false)
@@ -39,7 +41,7 @@ namespace ROELibrary
                     //read message
                     if (_serialPort.BytesToRead() > 0)
                     {
-                            message = _serialPort.ReadLine();
+                            json = _serialPort.ReadLine();
                             messageReceived = true;
                         
                     }
@@ -52,10 +54,10 @@ namespace ROELibrary
             }
 
             //check if message was correctly received
-            if ((message[0] == MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage)[0]) && (message[message.Length - 1] == MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage)[0]))
+            if ((json[0] == MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage)[0]) && (json[json.Length - 1] == MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage)[0]))
             {
-                message = message.TrimStart(MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage)[0]);
-                message = message.TrimEnd(MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage)[0]);
+                json = json.TrimStart(MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage)[0]);
+                json = json.TrimEnd(MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage)[0]);
             }
             else
             {
@@ -63,7 +65,9 @@ namespace ROELibrary
                 throw new IncorrectMessageException();
             }
 
-            return message;
+            emptyMessage.DeserializeFromJson(json);
+
+            return emptyMessage;
         }
     }
 }

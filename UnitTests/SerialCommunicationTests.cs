@@ -21,12 +21,14 @@ namespace UnitTests
             string startEndSymbol = MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage);
             var serialPort = new Mock<ISerialPort>();
             serialPort.Setup(x => x.Write(It.IsAny<string>()));
-            
+
+            var messageObject = new Mock<IMessage>();
+            messageObject.Setup(x => x.SerializeToJson()).Returns(message);
 
             SerialCommunication serialCommunication = new SerialCommunication(serialPort.Object);
 
             //act
-            serialCommunication.SendMessage(message);
+            serialCommunication.SendMessage(messageObject.Object);
 
             //assert
             serialPort.Verify(x => x.Write(startEndSymbol + message + startEndSymbol), Times.Once);
@@ -54,12 +56,16 @@ namespace UnitTests
             .Returns(5) //higher than 0
             .Returns(0);
 
+            var messageObject = new Mock<IMessage>();
+
             //testing object
             var serialCommunication = new SerialCommunication(serialPort.Object);
 
+            //act
+            IMessage result = serialCommunication.ReceiveMessage(messageObject.Object);
 
             //act & assert
-            Assert.Equal(messageWithoutSymbol, serialCommunication.ReceiveMessage());
+            messageObject.Verify(x => x.DeserializeFromJson(messageWithoutSymbol), Times.Once);
         }
 
         [Theory]
@@ -80,10 +86,12 @@ namespace UnitTests
             .Returns(5) //higher than 0
             .Returns(0);
 
+            var messageObject = new Mock<IMessage>();
+
             var serialCommunication = new SerialCommunication(serialPort.Object);
 
             //act & assert
-            IncorrectMessageException exception = Assert.Throws<IncorrectMessageException>(() => serialCommunication.ReceiveMessage());
+            IncorrectMessageException exception = Assert.Throws<IncorrectMessageException>(() => serialCommunication.ReceiveMessage(messageObject.Object));
             //TODO: add exception data
             Assert.Equal("aaa", exception.Message);
         }
@@ -97,10 +105,12 @@ namespace UnitTests
 
             serialPort.Setup(x => x.IsOpen()).Returns(false);
 
+            var messageObject = new Mock<IMessage>();
+
             var serialCommunication = new SerialCommunication(serialPort.Object);
 
             //act & assert
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => serialCommunication.ReceiveMessage());
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => serialCommunication.ReceiveMessage(messageObject.Object));
             //TODO: add exception data
             Assert.Equal("aaa", exception.Message);
         }

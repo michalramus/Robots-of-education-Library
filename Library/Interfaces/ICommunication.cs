@@ -3,8 +3,8 @@ namespace ROELibrary
     interface ICommunication
     {
 
-        void SendMessage(string message);
-        string ReceiveMessage();
+        void SendMessage(IMessage message);
+        IMessage ReceiveMessage(IMessage emptyMessage);
     }
 }
 
