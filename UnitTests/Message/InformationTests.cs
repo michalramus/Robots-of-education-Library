@@ -35,7 +35,8 @@ namespace UnitTests.Message
             JArray jArray = information.serializeToJsonArray();
             string result = jArray.ToString();
             result = result.Replace(" ", "")
-                    .Replace("\n", "");
+                    .Replace("\n", "")
+                    .Replace("\r", "");
 
             //Assert
             Assert.Equal(json, result);

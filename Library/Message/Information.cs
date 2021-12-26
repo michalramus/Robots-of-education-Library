@@ -95,14 +95,14 @@ namespace ROELibrary
                 catch (ValueNotFoundException ex)
                 {
                     var ex2 = new IncorrectMessageException("Information setting is incorrect", ex);
-                    ex2.Data.Add("json", jsonArray.ToString().Replace(" ", "").Replace("\n", ""));
+                    ex2.Data.Add("json", jsonArray.ToString().Replace(" ", "").Replace("\n", "").Replace("\r", ""));
 
                     throw ex2;
                 }
                 catch (ArgumentOutOfRangeException ex)
                 {
                     var ex2 = new IncorrectMessageException("Information message has missing key", ex);
-                    ex2.Data.Add("json", jsonArray.ToString().Replace(" ", "").Replace("\n", ""));
+                    ex2.Data.Add("json", jsonArray.ToString().Replace(" ", "").Replace("\n", "").Replace("\r", ""));
 
                     throw ex2;
                 }

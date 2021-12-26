@@ -66,6 +66,7 @@ namespace UnitTests.Message
 
             result = result.Replace("\n", "");
             result = result.Replace(" ", "");
+            result = result.Replace("\r", "");
 
             //assert
             Assert.Equal(Json, result);

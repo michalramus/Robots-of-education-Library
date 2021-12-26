@@ -40,7 +40,7 @@ namespace UnitTests.Message
             IncorrectMessageException ex = Assert.Throws<IncorrectMessageException>(() => error.deserializeFromJsonObject(jsonObject));
 
             string errorJson = ex.Data["json"].ToString();
-            errorJson = errorJson.Replace("\n", "").Replace(" ", "");
+            errorJson = errorJson.Replace("\n", "").Replace(" ", "").Replace("\r", "");
 
             Assert.Equal("Error message has missing key", ex.Message);
             Assert.Equal("{\"errMsg\":\"messageAAbbCC\"}", errorJson);
