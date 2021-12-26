@@ -48,8 +48,7 @@ namespace ROELibrary
                 }
                 else
                 {
-                    throw new InvalidOperationException();
-                    //TODO: add more information to exception
+                    throw new InvalidOperationException("Serial port is not open");
                 }
             }
 
@@ -61,8 +60,10 @@ namespace ROELibrary
             }
             else
             {
-                //TODO: extra information in exception
-                throw new IncorrectMessageException();
+                var ex = new IncorrectMessageException("Received message is invalid: doesn't have startEndMessage symbol");
+                ex.Data.Add("json", json);
+
+                throw ex;
             }
 
             emptyMessage.DeserializeFromJson(json);
