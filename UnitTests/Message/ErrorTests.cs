@@ -57,8 +57,8 @@ namespace UnitTests.Message
             IncorrectMessageException ex = Assert.Throws<IncorrectMessageException>(() => error.deserializeFromJsonObject(jsonObject));
 
             Assert.Equal("Error type is incorrect", ex.Message);
-            Assert.Equal(ex.InnerException.Data["value"].ToString(), "incorrectErrorType");
-            Assert.Equal(ex.Data["json"].ToString(), "{\"errorType\":\"incorrectErrorType\",\"errMsg\":\"messageAAbbCC\"}");
+            Assert.Equal("incorrectErrorType", ex.InnerException.Data["value"].ToString());
+            Assert.Equal("{\"errorType\":\"incorrectErrorType\",\"errMsg\":\"messageAAbbCC\"}", ex.Data["json"].ToString());
         }
     }
 }
