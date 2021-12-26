@@ -22,9 +22,10 @@ namespace ROELibrary
             {
                 _serialPort.Write(json);
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException ex)
             {
-                //TODO: add more information to exception
+                var ex2 = new InvalidOperationException("Serial port is not open", ex);
+                throw ex2;
             }
         }
 

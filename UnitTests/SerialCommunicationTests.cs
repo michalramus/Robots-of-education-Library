@@ -115,5 +115,24 @@ namespace UnitTests
 
             Assert.Equal("Serial port is not open", exception.Message);
         }
+
+        [Fact]
+        public void SendMessage_SerialPortNotOpen_ThrowException()
+        {
+            //arrange
+            //mock
+            var serialPort = new Mock<ISerialPort>();
+
+            serialPort.Setup(x => x.Write(It.IsAny<string>())).Throws(new InvalidOperationException());
+
+            var messageObject = new Mock<IMessage>();
+
+            var serialCommunication = new SerialCommunication(serialPort.Object);
+
+            //act & assert
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => serialCommunication.SendMessage(messageObject.Object));
+
+            Assert.Equal("Serial port is not open", exception.Message);
+        }
     }
 }
