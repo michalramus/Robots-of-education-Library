@@ -32,6 +32,13 @@ namespace ROELibrary
 
                 throw ex2;
             }
+            catch (ValueNotFoundException ex)
+            {
+                var ex2 = new IncorrectMessageException("Error type is incorrect", ex);
+                ex2.Data.Add("json", json.ToString().Replace(" ", "").Replace("\n", ""));
+
+                throw ex2;
+            }
         }
     }
 }

@@ -45,5 +45,20 @@ namespace UnitTests.Message
             Assert.Equal("Error message has missing key", ex.Message);
             Assert.Equal("{\"errMsg\":\"messageAAbbCC\"}", errorJson);
         }
+
+        [Fact]
+        public void deserializeFromJsonObject_incorrectErrorType_throwException()
+        {
+            //arrange
+            Error error = new Error();
+            JObject jsonObject = JObject.Parse("{\"errorType\":\"incorrectErrorType\",\"errMsg\":\"messageAAbbCC\"}");
+
+            //act & assert
+            IncorrectMessageException ex = Assert.Throws<IncorrectMessageException>(() => error.deserializeFromJsonObject(jsonObject));
+
+            Assert.Equal("Error type is incorrect", ex.Message);
+            Assert.Equal(ex.InnerException.Data["value"].ToString(), "incorrectErrorType");
+            Assert.Equal(ex.Data["json"].ToString(), "{\"errorType\":\"incorrectErrorType\",\"errMsg\":\"messageAAbbCC\"}");
+        }
     }
 }
