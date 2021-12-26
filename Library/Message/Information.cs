@@ -1,11 +1,17 @@
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
 namespace ROELibrary
 {
-    class Information : IMessageContainerToSendArray //TODO: add IMessageContainerToReceive
+    class Information : IMessageContainerToSendArray, IMessageContainerToReceiveArray
     {
-        List<InformationObject> settings = new List<InformationObject>(); //list of all settings in this information object
+        public List<InformationObject> settings { get; private set; } //list of all settings in this information object
+
+        public Information()
+        {
+            settings = new List<InformationObject>();
+        }
 
         public EMessageSymbols getContainerType()
         {
@@ -61,11 +67,11 @@ namespace ROELibrary
                 //check if setting is to set or get
                 if (setting.settingStatus == EMessageSymbols.getSetting)
                 {
-                    settingArray.Add(MessageSymbols.symbols.getValue(setting.settingStatus));
+                    settingArray.Add(MessageSymbols.symbols.getValue((EMessageSymbols)setting.settingStatus));
                 }
                 else
                 {
-                    settingArray.Add(MessageSymbols.symbols.getValue(setting.settingStatus));
+                    settingArray.Add(MessageSymbols.symbols.getValue((EMessageSymbols)setting.settingStatus));
                     settingArray.Add(setting.value);
                 }
 
@@ -73,6 +79,36 @@ namespace ROELibrary
             }
 
             return jsonArray;
+        }
+
+        public void deserializeFromJsonArray(JArray jsonArray)
+        {
+            foreach (var settingArray in jsonArray)
+            {
+                InformationObject informationObject = new InformationObject();
+
+                try
+                {
+                informationObject.setting = InformationSymbols.symbols.getKey(settingArray[0].ToString());
+                informationObject.value = settingArray[1].ToString();
+                }
+                catch (ValueNotFoundException ex)
+                {
+                    var ex2 = new IncorrectMessageException("Information setting is incorrect", ex);
+                    ex2.Data.Add("json", jsonArray.ToString().Replace(" ", "").Replace("\n", ""));
+
+                    throw ex2;
+                }
+                catch (ArgumentOutOfRangeException ex)
+                {
+                    var ex2 = new IncorrectMessageException("Information message has missing key", ex);
+                    ex2.Data.Add("json", jsonArray.ToString().Replace(" ", "").Replace("\n", ""));
+
+                    throw ex2;
+                }
+
+                settings.Add(informationObject);
+            }
         }
     }
 }
