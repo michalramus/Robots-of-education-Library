@@ -92,7 +92,6 @@ namespace UnitTests
 
             //act & assert
             IncorrectMessageException exception = Assert.Throws<IncorrectMessageException>(() => serialCommunication.ReceiveMessage(messageObject.Object));
-            //TODO: add exception data
             Assert.Equal("Received message is invalid: doesn't have startEndMessage symbol", exception.Message);
             Assert.Equal(incorrectMessage, exception.Data["json"]);
         }

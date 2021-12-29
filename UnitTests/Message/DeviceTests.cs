@@ -7,7 +7,6 @@ namespace UnitTests.Msg
 {
     public class DeviceTests
     {
-        //TODO: change test
         [Theory]
         [InlineData(0, (int)ERobotsSymbols.car, "{\"devType\":\"car\",\"ID\":0,\"pins\":[1,15,7,42,6]}", 1, 15, 7, 42, 6)]
         [InlineData(15, (int)ERobotsSymbols.car, "{\"devType\":\"car\",\"ID\":15,\"pins\":[18,1,30]}", 18, 1, 30)]
