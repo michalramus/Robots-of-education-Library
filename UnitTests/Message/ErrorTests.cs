@@ -3,7 +3,7 @@ using Xunit;
 using ROELibrary;
 using Newtonsoft.Json.Linq;
 
-namespace UnitTests.Message
+namespace UnitTests.Msg
 {
     public class ErrorTests
     {

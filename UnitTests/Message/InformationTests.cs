@@ -3,7 +3,7 @@ using ROELibrary;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
-namespace UnitTests.Message
+namespace UnitTests.Msg
 {
     public class InformationTests
     {
