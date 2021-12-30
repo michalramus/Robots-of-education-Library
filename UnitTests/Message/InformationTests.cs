@@ -56,7 +56,7 @@ namespace UnitTests.Msg
 
         public static IEnumerable<object[]> Data_DeserializeFromJsonArray_DeserializeInformation_ReturnCorrectJson() //TODO: add more tests
         {
-            yield return new object[] { new List<object>() {new InformationObject(){ setting = EInformationSymbols.getFirmwareVersion, settingStatus = null, value = "get"}}, "[[\"firmVer\",\"get\"]]" };
+            yield return new object[] { new List<object>() {new InformationObject(){ setting = EInformationSymbols.getFirmwareVersion, settingStatus = null, value = "1.15.243"}}, "[[\"firmVer\",\"1.15.243\"]]" };
         }
         [Theory]
         [MemberData(nameof(Data_DeserializeFromJsonArray_DeserializeInformation_ReturnCorrectJson))]
