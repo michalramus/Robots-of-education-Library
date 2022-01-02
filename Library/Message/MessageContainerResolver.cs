@@ -4,10 +4,10 @@ namespace ROELibrary
 {
     class MessageContainerResolver
     {
-        static Type config = typeof(Device);
-        static Type task = typeof(Task);
-        static Type error = typeof(Error);
-        static Type information = typeof(Information);
+        static Func<IMessageContainer> config = () => new Device();
+        static Func<IMessageContainer> task = () => new Task();
+        static Func<IMessageContainer> error = () => new Error();
+        static Func<IMessageContainer> information = () => new Information();
 
 
         /// <summary>
@@ -15,7 +15,7 @@ namespace ROELibrary
         /// </summary>
         /// <param name="messageType"></param>
         /// <param name="messageContainer"></param>
-        public static void updateContainerType(EMessageSymbols messageType, Type messageContainer)
+        public static void updateContainerType(EMessageSymbols messageType, Func<IMessageContainer> messageContainer)
         {
             switch (messageType)
             {
@@ -40,7 +40,7 @@ namespace ROELibrary
             }
         }
 
-        public static Type GetMessageContainerType(EMessageSymbols messageType)
+        public static Func<IMessageContainer> GetMessageContainerType(EMessageSymbols messageType)
         {
             switch (messageType)
             {

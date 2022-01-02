@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using Xunit;
 using ROELibrary;
 using Moq;
@@ -7,18 +7,22 @@ namespace UnitTests.Msg
 {
     public class MessageContainerResolverTests
     {
+        public static IEnumerable<object[]> Data_GetMessageContainerType_ReturnCorrectMessageContainer()
+        {
+            yield return new object[] { (int)EMessageSymbols.msgTypeConfig, new Device() };
+            yield return new object[] { (int)EMessageSymbols.msgTypeTask, new Task() };
+            yield return new object[] { (int)EMessageSymbols.msgTypeError, new Error() };
+            yield return new object[] { (int)EMessageSymbols.msgTypeInformation, new Information() };
+        }
         [Theory]
-        [InlineData((int)EMessageSymbols.msgTypeConfig, typeof(Device))]
-        [InlineData((int)EMessageSymbols.msgTypeTask, typeof(Task))]
-        [InlineData((int)EMessageSymbols.msgTypeError, typeof(Error))]
-        [InlineData((int)EMessageSymbols.msgTypeInformation, typeof(Information))]
-        public void GetMessageContainerType_ReturnsCorrectType(int messageType, Type expectedType)
+        [MemberData(nameof(Data_GetMessageContainerType_ReturnCorrectMessageContainer))]
+        public void GetMessageContainerType_ReturnsCorrectType(int messageType, object expectedType)
         {
             //act
             var actualType = MessageContainerResolver.GetMessageContainerType((EMessageSymbols)messageType);
 
             //assert
-            Assert.Equal(expectedType, actualType);
+            Assert.Equal(expectedType.ToString(), actualType().ToString());
         }
 
         [Fact]
