@@ -60,3 +60,6 @@ $RECYCLE.BIN/
 # Build folders
 obj/
 bin/
+
+# keys
+*.snk
