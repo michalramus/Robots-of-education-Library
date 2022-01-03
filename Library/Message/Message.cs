@@ -7,9 +7,20 @@ namespace ROELibrary
 {
     class Message : IMessage
     {
+        Func<EMessageSymbols, Func<IMessageContainer>> createMessageContainer = MessageContainerResolver.GetMessageContainerType;
         public EMessageSymbols messageType { get; private set; }
 
         List<IMessageContainer> messageContainers = new List<IMessageContainer>();
+
+        /// <summary>
+        /// By default delegate is set to MessageContainerResolver.GetMessageContainerType
+        /// </summary>
+        /// <param name="getMessageContainerType"></param>
+        public void setGetMessageContainerTypeDelegate(Func<EMessageSymbols, Func<IMessageContainer>> createMessageContainer)
+        {
+            this.createMessageContainer = createMessageContainer;
+        }
+
 
         /// <summary>
         /// Message type is set by type of first added message container
@@ -69,14 +80,14 @@ namespace ROELibrary
 
             if ((messageType == EMessageSymbols.msgTypeConfig) || (messageType == EMessageSymbols.msgTypeTask)) //serialize task or config
             {
-            JObject jsonObj = serializeJObject();
+                JObject jsonObj = serializeJObject();
 
-            string json = jsonObj.ToString();
-            json = json.Replace("\n", "").Replace(" ", "").Replace("\r", "");
+                string json = jsonObj.ToString();
+                json = json.Replace("\n", "").Replace(" ", "").Replace("\r", "");
 
-            return json;
+                return json;
             }
-            else if(messageType == EMessageSymbols.msgTypeInformation) //serialize information
+            else if (messageType == EMessageSymbols.msgTypeInformation) //serialize information
             {
                 JObject jsonObj = serializeJArray();
 
@@ -131,47 +142,83 @@ namespace ROELibrary
             return jObject;
         }
 
-        public void DeserializeFromJson(string json) //TODO:
+        public void DeserializeFromJson(string json)
         {
-        //     JObject jsonObject = new JObject();
+            JObject jsonObject = new JObject();
 
-        //     try
-        //     {
-        //         jsonObject = JObject.Parse(json);
-        //     }
-        //     catch (JsonReaderException ex)
-        //     {
-        //         //TODO: add exception message
-        //         IncorrectMessageException ex2 = new IncorrectMessageException("", ex);
-        //         ex2.Data.Add("json", json);
-        //     }
+            //validate message
+            try
+            {
+                jsonObject = JObject.Parse(json);
+            }
+            catch (JsonReaderException ex)
+            {
+                IncorrectMessageException ex2 = new IncorrectMessageException("Cannot deserialize received message", ex);
+                ex2.Data.Add("json", json);
 
-        //     if (jsonObject.ContainsKey(MessageSymbols.symbols.getValue(EMessageSymbols.messageType)))
-        //     {
-        //         messageType = MessageSymbols.symbols.getKey(jsonObject[MessageSymbols.symbols.getValue(EMessageSymbols.messageType)].ToString());
-        //     }
-        //     else
-        //     {
-        //         //TODO: add exception message
-        //         IncorrectMessageException ex = new IncorrectMessageException("");
-        //         ex.Data.Add("json", json);
-        //     }
+                throw ex2;
+            }
 
-        //     switch (messageType)
-        //     {
-        //         case EMessageSymbols.msgTypeError:
-        //             Error error = new Error();
-        //             error.deserializeFromJsonObject(jsonObject);
+            if (jsonObject.ContainsKey(MessageSymbols.symbols.getValue(EMessageSymbols.messageType)))
+            {
+                messageType = MessageSymbols.symbols.getKey(jsonObject[MessageSymbols.symbols.getValue(EMessageSymbols.messageType)].ToString());
+            }
+            else
+            {
+                IncorrectMessageException ex = new IncorrectMessageException("Message has missing message type key");
+                ex.Data.Add("json", json);
 
-        //             messageContainers.Add(error);
-        //             break;
-        //         case EMessageSymbols.msgTypeInformation:
-        //             Information information = new Information();
-                    
+                throw ex;
+            }
 
-        //     }
+            //deserialize message
+            switch (messageType)
+            {
+                case EMessageSymbols.msgTypeError:
+                    IMessageContainerToReceive error = createMessageContainer(messageType)() as IMessageContainerToReceive;
+
+                    error.deserializeFromJsonObject(jsonObject);
+                    messageContainers.Add(error);
+                    break;
+
+                case EMessageSymbols.msgTypeInformation:
+                    try
+                    {
+                        messageContainers.Add(deserializeInformation(jsonObject, createMessageContainer(messageType)() as IMessageContainerToReceiveArray));
+                    }
+                    catch (IncorrectMessageException ex)
+                    {
+                        ex.Data["json"] = json;
+                        throw;
+                    }
+
+                    break;
+            }
         }
 
+        private IMessageContainer deserializeInformation(JObject jsonObject, IMessageContainerToReceiveArray information)
+        {
+            JToken jsonArray;
+            try
+            {
+                jsonArray = jsonObject[MessageSymbols.symbols.getValue(EMessageSymbols.contTypeInformation)];
+            }
+            catch (NullReferenceException ex)
+            {
+                var ex2 = new IncorrectMessageException("Information message has missing key", ex); 
+                throw ex2;
+            }
+
+            JArray informationArray = jsonArray as JArray;
+            if (informationArray == null)
+            {
+                var ex = new IncorrectMessageException("Information message is in incorrect format");
+                throw ex;
+            }
+
+            information.deserializeFromJsonArray(informationArray);
+            return information;
+        }
 
     }
 }

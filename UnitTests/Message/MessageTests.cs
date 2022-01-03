@@ -109,7 +109,7 @@ namespace UnitTests.Msg
         }
 
         [Theory]//TODO: add tests
-        [InlineData("{\"type\":\"info\",\"data\":[[\"firmVer\",\"get\"]]}" ,"[[\"firmVer\",\"get\"]]")]
+        [InlineData("{\"type\":\"info\",\"data\":[[\"firmVer\",\"get\"]]}", "[[\"firmVer\",\"get\"]]")]
         public void serializeToJson_serializeInformationAsContainerToSendArray_returnCorrectJson(string exceptedJson, params string[] containerJsons)
         {
             //arrange & act
@@ -155,6 +155,108 @@ namespace UnitTests.Msg
             //act & assert
             var ex = Assert.Throws<IncorrectMessageObjectSetupException>(() => message.SerializeToJson());
             Assert.Equal("Trying to serialize empty message object", ex.Message);
+        }
+
+
+        //deserializeFromJson
+
+        [Fact]
+        public void deserializeFromJson_deserializeNonDeserializableJson_throwException()
+        {
+            //arrange
+            var message = new Message();
+            string json = "{\"type\":\"information\",\"data\":[[\"firmVer\",\"get\"]]"; //missing closing bracket
+
+            //act & assert
+            var ex = Assert.Throws<IncorrectMessageException>(() => message.DeserializeFromJson(json));
+            Assert.Equal("Cannot deserialize received message", ex.Message);
+            Assert.Equal(json, ex.Data["json"]);
+        }
+
+        [Theory] //TODO: add more tests for information msg
+        //error
+        [InlineData("{\"errorType\":\"incorrectPinout\",\"errMsg\":\"message\",\"errValue\":\"value123\",\"firmVer\":\"1.18.5\"}", "Message has missing message type key")]
+        [InlineData("{\"errorType\":\"incorrectPinout\",\"errMsg\":\"wrong pinout 885\",\"errValue\":\"pin 4 - wrong\",\"firmVer\":\"0.2 alpha\"}", "Message has missing message type key")]
+        [InlineData("{\"errorType\":\"incorrectPinout\",\"errMsg\":\"TestTest\",\"errValue\":\"testValue\",\"firmVer\":\"gdd firmware\"}", "Message has missing message type key")]
+        [InlineData("{\"errorType\":\"incorrectPinout\",\"errMsg\":\"Human Avon Applications\",\"errValue\":\"val-incorrect pin 1500100700\",\"firmVer\":\"15.14.13\"}", "Message has missing message type key")]
+        [InlineData("{\"errorType\":\"incorrectPinout\",\"errMsg\":\"wrong   number\",\"errValue\":\"f3d012ad-96d7-4fc6-b65e-c9c3f31cff51\",\"firmVer\":\"95387.79\"}", "Message has missing message type key")]
+        //information
+        [InlineData("{\"data\":[[\"firmVer\",\"get\"]]}", "Message has missing message type key")]
+        [InlineData("{\"type\":\"info\"}", "Information message is in incorrect format")]
+        public void deserializeFromJson_deserializeJsonWithoutImportantKey_throwException(string json, string exMessage)
+        {
+            //arrange
+            var message = new Message();
+
+            //act & assert
+            var ex = Assert.Throws<IncorrectMessageException>(() => message.DeserializeFromJson(json));
+            Assert.Equal(exMessage, ex.Message);
+            Assert.Equal(json, ex.Data["json"]);
+        }
+
+        [Fact]
+        public void deserializeFromJson_deserializeInformationMsgWithObjectInsteadOfArray_throwException()
+        {
+            //arrange
+            string json = "{\"type\":\"info\",\"data\":{\"firmVer\":\"get\"}}";
+            var message = new Message();
+            Func <IMessageContainer> informationCreator = () => { return new Information(); };
+
+            //setup mock
+            var mockResolver = new Mock<MessageContainerResolverMock>();
+            mockResolver.Setup(x => x.GetMessageContainerType(It.IsAny<EMessageSymbols>()))
+                .Returns(informationCreator);
+
+            message.setGetMessageContainerTypeDelegate(mockResolver.Object.GetMessageContainerType);
+
+            //act & assert
+            var ex = Assert.Throws<IncorrectMessageException>(() => message.DeserializeFromJson(json));
+            Assert.Equal("Information message is in incorrect format", ex.Message);
+            Assert.Equal(json, ex.Data["json"]);
+        }
+
+        [Theory] //TODO: add more tests
+        [InlineData("{\"type\":\"info\",\"data\":[[\"firmVer\",\"get\"]]}", "[[\"firmVer\",\"get\"]]")]
+        public void deserializeFromJson_deserializeCorrectInformationJson_setInformationContainer(string json, string exceptedJson)
+        {
+            var message = new Message();
+
+            //setup mock
+            var mockInformationContainer = new Mock<IMessageContainerToReceiveArray>();
+            mockInformationContainer.Setup(x => x.deserializeFromJsonArray(JArray.Parse(exceptedJson)));
+            Func<IMessageContainer> informationCreator = () => { return mockInformationContainer.Object; };
+
+            var mockResolver = new Mock<MessageContainerResolverMock>();
+            mockResolver.Setup(x => x.GetMessageContainerType(EMessageSymbols.msgTypeInformation)).Returns(informationCreator);
+
+            message.setGetMessageContainerTypeDelegate(mockResolver.Object.GetMessageContainerType);
+
+            //act
+            message.DeserializeFromJson(json);
+        }
+
+        [Theory]
+        [InlineData("{\"type\":\"error\",\"errorType\":\"incorrectPinout\",\"errMsg\":\"message\",\"errValue\":\"value123\",\"firmVer\":\"1.18.5\"}")]
+        [InlineData("{\"type\":\"error\",\"errorType\":\"incorrectPinout\",\"errMsg\":\"wrong pinout 885\",\"errValue\":\"pin 4 - wrong\",\"firmVer\":\"0.2 alpha\"}")]
+        [InlineData("{\"type\":\"error\",\"errorType\":\"incorrectPinout\",\"errMsg\":\"TestTest\",\"errValue\":\"testValue\",\"firmVer\":\"gdd firmware\"}")]
+        [InlineData("{\"type\":\"error\",\"errorType\":\"incorrectPinout\",\"errMsg\":\"Human Avon Applications\",\"errValue\":\"val-incorrect pin 1500100700\",\"firmVer\":\"15.14.13\"}")]
+        [InlineData("{\"type\":\"error\",\"errorType\":\"incorrectPinout\",\"errMsg\":\"wrong   number\",\"errValue\":\"f3d012ad-96d7-4fc6-b65e-c9c3f31cff51\",\"firmVer\":\"95387.79\"}")]
+        public void deserializeFromJson_deserializeCorrectErrorJson_setErrorContainer(string json)
+        {
+            var message = new Message();
+
+            //setup mock
+            var mockErrorContainer = new Mock<IMessageContainerToReceive>();
+            mockErrorContainer.Setup(x => x.deserializeFromJsonObject(JObject.Parse(json)));
+            Func<IMessageContainer> errorCreator = () => { return mockErrorContainer.Object; };
+
+            var mockResolver = new Mock<MessageContainerResolverMock>();
+            mockResolver.Setup(x => x.GetMessageContainerType(EMessageSymbols.msgTypeError)).Returns(errorCreator);
+
+            message.setGetMessageContainerTypeDelegate(mockResolver.Object.GetMessageContainerType);
+
+            //act
+            message.DeserializeFromJson(json);
         }
     }
 }
