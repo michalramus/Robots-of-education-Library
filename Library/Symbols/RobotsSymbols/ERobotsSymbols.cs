@@ -26,7 +26,7 @@ enum ERobotsSymbols
     valCarSpeed,
     valCarDistance,
     valCarRotationalSpeed,
-    valCarDirection,
+    valCarAngle,
     //calibration
     valCarGoTime, //time when car ride 1 meter
     valCarTurnTime, //time when car turn 90 degrees

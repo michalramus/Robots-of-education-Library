@@ -31,7 +31,7 @@ namespace ROELibrary
                 {ERobotsSymbols.valCarSpeed, "vCarSpeed"},
                 {ERobotsSymbols.valCarDistance, "vCarDist"},
                 {ERobotsSymbols.valCarRotationalSpeed, "vCarRotSpeed"},
-                {ERobotsSymbols.valCarDirection, "vCarDirec"},
+                {ERobotsSymbols.valCarAngle, "vCarAngle"},
 
                 {ERobotsSymbols.valCarGoTime, "vCarGoTime"},
                 {ERobotsSymbols.valCarTurnTime, "vCarTurnTime"},
