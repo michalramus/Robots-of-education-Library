@@ -3,7 +3,7 @@ namespace ROELibrary
     public class CarModel : VRobotModel
     {
         //properties
-        public int? id { get; set; } = null;
+        public uint? id { get; set; } = null;
 
         /// <summary>
         /// [en1][en2][en3][en4][speedControl-analogPin]
@@ -33,7 +33,7 @@ namespace ROELibrary
     /// return null when id not set
     /// </summary>
     /// <returns></returns>
-        internal override int? getID()
+        internal override uint? getID()
         {
             return id;
         }
