@@ -65,22 +65,22 @@ namespace ROELibrary
             //TODO: send message
         }
 
-        public void goForward(int distance)
-        {
-            //create message
-        }
-
-        public void rotate(int angle)
+        public void goForward(uint distance)
         {
             
         }
 
-        public void setRotationalSpeed(int speed)
+        public void rotate(uint angle)
         {
             
         }
 
-        public void setSpeed(int speed)
+        public void setRotationalSpeed(uint speed)
+        {
+            
+        }
+
+        public void setSpeed(uint speed)
         {
             
         }

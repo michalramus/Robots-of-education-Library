@@ -3,12 +3,12 @@ namespace ROELibrary
     public interface ICarDevice
     {
         //config
-        void setSpeed(int speed);
-        void setRotationalSpeed(int speed);
+        void setSpeed(uint speed);
+        void setRotationalSpeed(uint speed);
 
 
         //actions
-        void goForward(int distance);
-        void rotate(int angle);
+        void goForward(uint distance);
+        void rotate(uint angle);
     }
 }
