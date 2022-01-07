@@ -27,6 +27,7 @@ enum ERobotsSymbols
     valCarDistance,
     valCarRotationalSpeed,
     valCarAngle,
+    //TODO: delete calibration symbols
     //calibration
     valCarGoTime, //time when car ride 1 meter
     valCarTurnTime, //time when car turn 90 degrees
