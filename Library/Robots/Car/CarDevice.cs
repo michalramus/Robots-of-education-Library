@@ -67,7 +67,20 @@ namespace ROELibrary
 
         public void goForward(uint distance)
         {
-            
+            //create message
+            IMessage msg = _createMessage();
+            Task task = _createMessageContainer(EMessageSymbols.msgTypeTask)() as Task;
+
+            //set device
+            task.devID = id;
+            task.devType = ERobotsSymbols.car;
+            task.task = ERobotsSymbols.taskCarGo;
+            task.AddExtraValue(ERobotsSymbols.valCarDistance, distance.ToString());
+
+            //send message
+            msg.addMsgContainer(task);
+            //TODO: send message
+
         }
 
         public void rotate(uint angle)
