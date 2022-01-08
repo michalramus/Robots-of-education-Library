@@ -15,7 +15,7 @@ namespace ROELibrary
         Func<IMessage> _createMessage = null;
         Func<EMessageSymbols, Func<IMessageContainer>> _createMessageContainer = null;
 
-        CarDevice(VRobotModel carModel, Func<IMessage> createMessage, Func<EMessageSymbols, Func<IMessageContainer>> createMessageContainer)
+        public CarDevice(VRobotModel carModel, Func<IMessage> createMessage, Func<EMessageSymbols, Func<IMessageContainer>> createMessageContainer)
         {
             //set creators
             _createMessage = createMessage;
@@ -24,7 +24,7 @@ namespace ROELibrary
             setDevice(carModel);
         }
 
-        void setDevice(VRobotModel model)
+        private void setDevice(VRobotModel model)
         {
             //validate model
             if (model.getModelType() != ERobotsSymbols.car)
@@ -46,7 +46,7 @@ namespace ROELibrary
             carTurnTime = (decimal)carModel.carTurnTime;
         }
 
-        void sendConfigMsg()
+        private void sendConfigMsg()
         {
             //create message
             IMessage msg = _createMessage();
