@@ -1,6 +1,6 @@
 namespace ROELibrary
 {
-    public interface ICarDevice
+    public interface ICarDevice : IRobotDevice
     {
         //config
         void setSpeed(uint speed);
