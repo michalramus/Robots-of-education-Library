@@ -100,15 +100,40 @@ namespace ROELibrary
             //TODO: send message
 
         }
+        public void setSpeed(uint speed)
+        {
+            // create message
+            IMessage msg = _createMessage();
+            Task task = _createMessageContainer(EMessageSymbols.msgTypeTask)() as Task;
+
+            //set device
+            task.devID = id;
+            task.devType = ERobotsSymbols.car;
+            task.task = ERobotsSymbols.nothingToDo;
+            task.AddExtraValue(ERobotsSymbols.valCarSpeed, speed.ToString());
+
+            //send message
+            msg.addMsgContainer(task);
+            //TODO: send message
+
+        }
 
         public void setRotationalSpeed(uint speed)
         {
+            // create message
+            IMessage msg = _createMessage();
+            Task task = _createMessageContainer(EMessageSymbols.msgTypeTask)() as Task;
 
+            //set device
+            task.devID = id;
+            task.devType = ERobotsSymbols.car;
+            task.task = ERobotsSymbols.nothingToDo;
+            task.AddExtraValue(ERobotsSymbols.valCarRotationalSpeed, speed.ToString());
+
+            //send message
+            msg.addMsgContainer(task);
+            //TODO: send message
         }
 
-        public void setSpeed(uint speed)
-        {
-
-        }
     }
 }
