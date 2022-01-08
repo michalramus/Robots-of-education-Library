@@ -19,6 +19,7 @@ namespace ROELibrary
                 {ERobotsSymbols.task, "task"},
                 {ERobotsSymbols.extraValuesNumber, "exValNum"},
                 {ERobotsSymbols.extraValues, "exVal"},
+                {ERobotsSymbols.nothingToDo, "nothing"},
 
 
                 //symbols for concrete robot

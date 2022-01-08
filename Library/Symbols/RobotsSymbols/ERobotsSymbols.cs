@@ -13,7 +13,7 @@ enum ERobotsSymbols
     task,
     extraValuesNumber,
     extraValues,
-
+    nothingToDo, //special task to send only extra values
 
     //symbols for concrete robot
 
