@@ -7,7 +7,7 @@ namespace ROELibrary
         SerialPort _serialPort;
         public SerialPortFacade(SerialPort serialPort)
         {
-            _serialPort = new SerialPort();
+            _serialPort = serialPort;
         }
         public string ReadLine()
         {
