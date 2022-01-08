@@ -85,17 +85,30 @@ namespace ROELibrary
 
         public void rotate(uint angle)
         {
-            
+            // create message
+            IMessage msg = _createMessage();
+            Task task = _createMessageContainer(EMessageSymbols.msgTypeTask)() as Task;
+
+            //set device
+            task.devID = id;
+            task.devType = ERobotsSymbols.car;
+            task.task = ERobotsSymbols.taskCarTurn;
+            task.AddExtraValue(ERobotsSymbols.valCarDistance, angle.ToString());
+
+            //send message
+            msg.addMsgContainer(task);
+            //TODO: send message
+
         }
 
         public void setRotationalSpeed(uint speed)
         {
-            
+
         }
 
         public void setSpeed(uint speed)
         {
-            
+
         }
     }
 }
