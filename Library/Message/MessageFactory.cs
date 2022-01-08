@@ -11,9 +11,9 @@ namespace ROELibrary
             _messageCreator = messageCreator;
         }
 
-        public static Func<IMessage> getMessageCreator()
+        public static IMessage createMessage()
         {
-            return _messageCreator;
+            return _messageCreator();
         }
     }
 }
