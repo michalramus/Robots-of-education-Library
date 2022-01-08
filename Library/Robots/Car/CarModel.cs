@@ -17,7 +17,7 @@ namespace ROELibrary
         /// </summary>
         /// <value></value>
         public decimal? carGoTime { get; set; } = null;
-        //TODO: delete calibration values
+        //TODO: delete change values
 
         /// <summary>
         /// time when car turn 90 degrees
