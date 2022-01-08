@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Xunit;
 using ROELibrary;
-using Moq;
+using System;
 
 namespace UnitTests.Msg
 {
@@ -32,7 +32,7 @@ namespace UnitTests.Msg
             var messageType = EMessageSymbols.contTypeTask;
 
             //act
-            var ex = Assert.Throws<IncorrectMessageException>(() => MessageContainerResolver.GetMessageContainerType(messageType));
+            var ex = Assert.Throws<ArgumentException>(() => MessageContainerResolver.GetMessageContainerType(messageType));
 
             //assert
             Assert.Equal("Message type is incorrect", ex.Message);

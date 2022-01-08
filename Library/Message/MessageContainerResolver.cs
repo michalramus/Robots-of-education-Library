@@ -57,7 +57,7 @@ namespace ROELibrary
                     return information;
 
                 default:
-                    var ex = new IncorrectMessageException("Message type is incorrect");
+                    var ex = new ArgumentException("Message type is incorrect");
                     ex.Data["messageType"] = messageType;
 
                     throw ex;
