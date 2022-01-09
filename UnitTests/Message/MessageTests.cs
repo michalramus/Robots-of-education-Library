@@ -207,7 +207,7 @@ namespace UnitTests.Msg
             mockResolver.Setup(x => x.GetMessageContainerType(It.IsAny<EMessageSymbols>()))
                 .Returns(informationCreator);
 
-            message.setGetMessageContainerTypeDelegate(mockResolver.Object.GetMessageContainerType);
+            message.setCreateMessageContainerDelegate(mockResolver.Object.GetMessageContainerType);
 
             //act & assert
             var ex = Assert.Throws<IncorrectMessageException>(() => message.DeserializeFromJson(json));
@@ -229,7 +229,7 @@ namespace UnitTests.Msg
             var mockResolver = new Mock<MessageContainerResolverMock>();
             mockResolver.Setup(x => x.GetMessageContainerType(EMessageSymbols.msgTypeInformation)).Returns(informationCreator);
 
-            message.setGetMessageContainerTypeDelegate(mockResolver.Object.GetMessageContainerType);
+            message.setCreateMessageContainerDelegate(mockResolver.Object.GetMessageContainerType);
 
             //act
             message.DeserializeFromJson(json);
@@ -253,7 +253,7 @@ namespace UnitTests.Msg
             var mockResolver = new Mock<MessageContainerResolverMock>();
             mockResolver.Setup(x => x.GetMessageContainerType(EMessageSymbols.msgTypeError)).Returns(errorCreator);
 
-            message.setGetMessageContainerTypeDelegate(mockResolver.Object.GetMessageContainerType);
+            message.setCreateMessageContainerDelegate(mockResolver.Object.GetMessageContainerType);
 
             //act
             message.DeserializeFromJson(json);

@@ -16,7 +16,7 @@ namespace ROELibrary
         /// By default delegate is set to MessageContainerResolver.GetMessageContainerType
         /// </summary>
         /// <param name="getMessageContainerType"></param>
-        public void setGetMessageContainerTypeDelegate(Func<EMessageSymbols, Func<IMessageContainer>> createMessageContainer)
+        public void setCreateMessageContainerDelegate(Func<EMessageSymbols, Func<IMessageContainer>> createMessageContainer)
         {
             this.createMessageContainer = createMessageContainer;
         }
@@ -205,7 +205,7 @@ namespace ROELibrary
             }
             catch (NullReferenceException ex)
             {
-                var ex2 = new IncorrectMessageException("Information message has missing key", ex); 
+                var ex2 = new IncorrectMessageException("Information message has missing key", ex);
                 throw ex2;
             }
 
