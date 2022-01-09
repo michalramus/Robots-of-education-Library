@@ -15,7 +15,7 @@ namespace ROELibrary
             return EMessageSymbols.contTypeTask;
         }
 
-        public void AddExtraValue(ERobotsSymbols valueID, string value)
+        public virtual void AddExtraValue(ERobotsSymbols valueID, string value)
         {
             extraValues.Add(valueID, value);
             extraValuesNumber++;
