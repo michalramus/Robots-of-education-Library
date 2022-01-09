@@ -9,7 +9,7 @@ namespace ROELibrary
         /// [en1][en2][en3][en4][speedControl-analogPin]
         /// </summary>
         /// <value></value>
-        public uint[] pins { get; set; } = new uint[5];
+        public uint[] pins { get; set; } = null;
 
         //calibration properties
         /// <summary>
