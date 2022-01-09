@@ -42,7 +42,7 @@ namespace ROELibrary
                 //TODO: throw exception
             }
 
-            if (pins.Length != 5)
+            if (carModel.pins.Length != 5)
             {
                 //TODO: throw exception
             }
