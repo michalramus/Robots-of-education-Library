@@ -24,6 +24,7 @@ namespace ROELibrary
             _sendMessage = sendMessage;
 
             setDevice(carModel);
+            sendConfigMsg();
         }
 
         private void setDevice(VRobotModel model)
@@ -55,8 +56,9 @@ namespace ROELibrary
 
         private void sendConfigMsg()
         {
+            //SEND CONFIG MESSAGE
             //create message
-            IMessage msg = _createMessage();
+            IMessage confMsg = _createMessage();
             Device device = _createMessageContainer(EMessageSymbols.msgTypeConfig)() as Device;
 
             //set device
@@ -68,8 +70,24 @@ namespace ROELibrary
             }
 
             //send message
-            msg.addMsgContainer(device);
-            _sendMessage(msg);
+            confMsg.addMsgContainer(device);
+            _sendMessage(confMsg);
+
+            //SEND TASK MESSAGE to set extra values
+            //create message
+            IMessage taskMsg = _createMessage();
+            Task task = _createMessageContainer(EMessageSymbols.msgTypeTask)() as Task;
+
+            //set task
+            task.devID = id;
+            task.devType = ERobotsSymbols.car;
+            task.task = ERobotsSymbols.nothingToDo;
+            task.AddExtraValue(ERobotsSymbols.valCarImpulsesPerRotation, impulsesPerRotation.ToString());
+            task.AddExtraValue(ERobotsSymbols.valCarCircumference, circumference.ToString());
+
+            //send message
+            taskMsg.addMsgContainer(task);
+            _sendMessage(taskMsg);
         }
 
         public void goForward(uint distance)
