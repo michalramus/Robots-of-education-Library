@@ -14,14 +14,16 @@ namespace UnitTests.Robots
         {
             //arrange
             var device = new Mock<IRobotDevice>();
-            Func<VRobotModel, IRobotDevice> deviceCreator = (VRobotModel robotModel) => { return device.Object; };
+            Func<VRobotModel, Action<IMessage>, IRobotDevice> deviceCreator = (VRobotModel robotModel, Action<IMessage> sendMessage) => { return device.Object; };
+            Action<IMessage> sendNothingMessage = (IMessage message) => { };
 
             //update creators
             RobotsFactory.updateDeviceCreators((ERobotsSymbols)deviceType, deviceCreator);
 
 
             //act && assert
-            Assert.Equal(device.Object, RobotsFactory.getDeviceCreator((ERobotsSymbols)deviceType)(new CarModel()));
+            Assert.Equal(device.Object, RobotsFactory.getDeviceCreator((ERobotsSymbols)deviceType)
+                                                        (new CarModel(), sendNothingMessage));
         }
 
         [Fact]

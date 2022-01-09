@@ -9,17 +9,19 @@ namespace ROELibrary
         uint[] pins = new uint[5]; // [en1][en2][en3][en4][speedControl-analogPin]
         decimal carGoTime = 0; // time when car ride 1 meter
         decimal carTurnTime = 0; // time when car turn 90 degrees
-
+                                 //TODO: create unit tests
 
         //creators
         Func<IMessage> _createMessage = null;
         Func<EMessageSymbols, Func<IMessageContainer>> _createMessageContainer = null;
+        Action<IMessage> _sendMessage = null;
 
-        public CarDevice(VRobotModel carModel, Func<IMessage> createMessage, Func<EMessageSymbols, Func<IMessageContainer>> createMessageContainer)
+        public CarDevice(VRobotModel carModel, Func<IMessage> createMessage, Func<EMessageSymbols, Func<IMessageContainer>> createMessageContainer, Action<IMessage> sendMessage)
         {
             //set creators
             _createMessage = createMessage;
             _createMessageContainer = createMessageContainer;
+            _sendMessage = sendMessage;
 
             setDevice(carModel);
         }
@@ -62,7 +64,7 @@ namespace ROELibrary
 
             //send message
             msg.addMsgContainer(device);
-            //TODO: send message
+            _sendMessage(msg);
         }
 
         public void goForward(uint distance)
@@ -79,7 +81,7 @@ namespace ROELibrary
 
             //send message
             msg.addMsgContainer(task);
-            //TODO: send message
+            _sendMessage(msg);
 
         }
 
@@ -97,7 +99,7 @@ namespace ROELibrary
 
             //send message
             msg.addMsgContainer(task);
-            //TODO: send message
+            _sendMessage(msg);
 
         }
         public void setSpeed(uint speed)
@@ -114,7 +116,7 @@ namespace ROELibrary
 
             //send message
             msg.addMsgContainer(task);
-            //TODO: send message
+            _sendMessage(msg);
 
         }
 
@@ -132,7 +134,7 @@ namespace ROELibrary
 
             //send message
             msg.addMsgContainer(task);
-            //TODO: send message
+            _sendMessage(msg);
         }
 
     }

@@ -4,9 +4,11 @@ namespace ROELibrary
 {
     class RobotsFactory
     {
-        static Func<VRobotModel, IRobotDevice> carDeviceCreator = (VRobotModel robotModel) => { return new CarDevice(robotModel, MessageFactory.createMessage, MessageContainerResolver.GetMessageContainerType); };
+        //creators
+        static Func<VRobotModel, Action<IMessage>, IRobotDevice> carDeviceCreator = (VRobotModel robotModel, Action<IMessage> sendMessage) => { return new CarDevice(robotModel, MessageFactory.createMessage, MessageContainerResolver.GetMessageContainerType, sendMessage); };
 
-        static public Func<VRobotModel, IRobotDevice> getDeviceCreator(ERobotsSymbols deviceType)
+
+        static public Func<VRobotModel, Action<IMessage>, IRobotDevice> getDeviceCreator(ERobotsSymbols deviceType)
         {
             switch (deviceType)
             {
@@ -20,7 +22,7 @@ namespace ROELibrary
             }
         }
 
-        static public void updateDeviceCreators(ERobotsSymbols creatorType, Func<VRobotModel, IRobotDevice> creator)
+        static public void updateDeviceCreators(ERobotsSymbols creatorType, Func<VRobotModel, Action<IMessage>, IRobotDevice> creator)
         {
             switch (creatorType)
             {
