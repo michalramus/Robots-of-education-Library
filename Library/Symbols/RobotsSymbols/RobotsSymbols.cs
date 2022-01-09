@@ -34,8 +34,8 @@ namespace ROELibrary
                 {ERobotsSymbols.valCarRotationalSpeed, "vCarRotSpeed"},
                 {ERobotsSymbols.valCarAngle, "vCarAngle"},
 
-                {ERobotsSymbols.valCarGoTime, "vCarGoTime"},
-                {ERobotsSymbols.valCarTurnTime, "vCarTurnTime"},
+                {ERobotsSymbols.valCarImpulsesPerRotation, "vCarImpPerRot"},
+                {ERobotsSymbols.valCarCircumference, "vCarCircumference"},
             }
         );
     }

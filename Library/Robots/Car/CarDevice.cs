@@ -7,9 +7,9 @@ namespace ROELibrary
         //properties
         uint id = 0;
         uint[] pins = null; // [en1][en2][en3][en4][speedControl-analogPin]
-        decimal carGoTime = 0; // time when car ride 1 meter
-        decimal carTurnTime = 0; // time when car turn 90 degrees
-                                 //TODO: create unit tests
+        uint impulsesPerRotation = 0; // impulses sent by hall sensor per one wheel rotation
+        uint circumference = 0; // circumference of wheel in centimeters
+                               //TODO: create unit tests
 
         //creators
         Func<IMessage> _createMessage = null;
@@ -36,7 +36,7 @@ namespace ROELibrary
 
             CarModel carModel = (CarModel)model;
 
-            if ((carModel.id == null) || (carModel.pins == null) || (carModel.carGoTime == null) || (carModel.carTurnTime == null))
+            if ((carModel.id == null) || (carModel.pins == null) || (carModel.impulsesPerRotation == null) || (carModel.circumference == null))
             {
                 //TODO: throw exception
             }
@@ -49,8 +49,8 @@ namespace ROELibrary
             //set properties
             id = (uint)carModel.id;
             pins = carModel.pins;
-            carGoTime = (decimal)carModel.carGoTime;
-            carTurnTime = (decimal)carModel.carTurnTime;
+            impulsesPerRotation = (uint)carModel.impulsesPerRotation;
+            circumference = (uint)carModel.circumference;
         }
 
         private void sendConfigMsg()

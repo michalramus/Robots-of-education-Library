@@ -29,8 +29,8 @@ enum ERobotsSymbols
     valCarAngle,
     //TODO: delete calibration symbols
     //calibration
-    valCarGoTime, //time when car ride 1 meter
-    valCarTurnTime, //time when car turn 90 degrees
+    valCarImpulsesPerRotation, //impulses sent by hall sensor per one wheel rotation
+    valCarCircumference, //circumference of wheel in centimeters
 
 
 }

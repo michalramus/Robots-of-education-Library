@@ -13,17 +13,16 @@ namespace ROELibrary
 
         //calibration properties
         /// <summary>
-        /// time when car ride 1 meter
+        /// impulses sent by hall sensor per one wheel rotation
         /// </summary>
         /// <value></value>
-        public decimal? carGoTime { get; set; } = null;
-        //TODO: delete change values
+        public uint? impulsesPerRotation { get; set; } = null;
 
         /// <summary>
-        /// time when car turn 90 degrees
+        /// circumference of wheel in centimeters
         /// </summary>
         /// <value></value>
-        public decimal? carTurnTime { get; set; } = null;
+        public uint? circumference { get; set; } = null;
 
         internal override ERobotsSymbols getModelType()
         {
