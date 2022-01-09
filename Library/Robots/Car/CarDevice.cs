@@ -6,7 +6,7 @@ namespace ROELibrary
     {
         //properties
         uint id = 0;
-        uint[] pins = new uint[5]; // [en1][en2][en3][en4][speedControl-analogPin]
+        uint[] pins = null; // [en1][en2][en3][en4][speedControl-analogPin]
         decimal carGoTime = 0; // time when car ride 1 meter
         decimal carTurnTime = 0; // time when car turn 90 degrees
                                  //TODO: create unit tests
@@ -37,6 +37,11 @@ namespace ROELibrary
             CarModel carModel = (CarModel)model;
 
             if ((carModel.id == null) || (carModel.pins == null) || (carModel.carGoTime == null) || (carModel.carTurnTime == null))
+            {
+                //TODO: throw exception
+            }
+
+            if (pins.Length != 5)
             {
                 //TODO: throw exception
             }
