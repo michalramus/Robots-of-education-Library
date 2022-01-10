@@ -32,19 +32,37 @@ namespace ROELibrary
             //validate model
             if (model.getModelType() != ERobotsSymbols.car)
             {
-                //TODO: throw exception
+                var ex = new DeviceModelIncorrectSetupException("Incorrect DeviceModel: expected CarModel");
+                ex.Data["modelType"] = model.getModelType();
+                ex.Data["exceptedModelType"] = ERobotsSymbols.car;
+                ex.Data["model"] = model.ToString();
+                throw ex;
             }
 
             CarModel carModel = (CarModel)model;
 
             if ((carModel.id == null) || (carModel.pins == null) || (carModel.impulsesPerRotation == null) || (carModel.circumference == null))
             {
-                //TODO: throw exception
+                var ex = new DeviceModelIncorrectSetupException("Some of properties in model are null");
+                ex.Data["id"] = carModel.id;
+                ex.Data["type"] = ERobotsSymbols.car;
+                ex.Data["pins"] = carModel.pins;
+                ex.Data["impulsesPerRotation"] = carModel.impulsesPerRotation;
+                ex.Data["circumference"] = carModel.circumference;
+
+                throw ex;
             }
 
             if (carModel.pins.Length != 5)
             {
-                //TODO: throw exception
+                var ex = new DeviceModelIncorrectSetupException("Car device model must have defined 5 pins");
+                ex.Data.Add("id", carModel.id);
+                ex.Data["type"] = ERobotsSymbols.car;
+                ex.Data["pins"] = carModel.pins;
+                ex.Data["impulsesPerRotation"] = carModel.impulsesPerRotation;
+                ex.Data["circumference"] = carModel.circumference;
+
+                throw ex;
             }
 
             //set properties

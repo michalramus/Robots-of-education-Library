@@ -70,7 +70,104 @@ namespace UnitTests.Robots
 
         }
 
-        
+        [Theory]
+        [InlineData((uint)15, new uint[] { 1, 2, 3, 4, 5 }, null, (uint)88)]
+        [InlineData((uint)0, new uint[] { 1, 2, 3, 4, 5 }, (uint)6, null)]
+        [InlineData((uint)15, new uint[] { 1, 6, 43, 72, 13 }, null, (uint)81)]
+        [InlineData((uint)40, null, (uint)21, (uint)42)]
+        [InlineData(null, new uint[] { 2, 56, 64, 33, 8 }, (uint)36, (uint)64)]
+        [InlineData(null, new uint[] { 4, 6, 8, 10, 12 }, null, (uint)25)]
+        [InlineData(null, null, (uint)327, (uint)64)]
+        [InlineData(null, new uint[] { 71, 62, 34, 21, 6 }, (uint)43789, null)]
+        [InlineData((uint)44, null, null, (uint)31)]
+        [InlineData((uint)55, null, (uint)845, null)]
+        [InlineData((uint)99, new uint[] { 82, 24, 37, 45, 52 }, null, null)]
+        [InlineData(null, null, null, (uint)47)]
+        [InlineData((uint)21, null, null, null)]
+        [InlineData(null, new uint[] { 14, 12, 17, 990, 421 }, null, null)]
+        [InlineData(null, null, (uint)243, null)]
+        [InlineData(null, null, null, null)]
+        [InlineData(null, new uint[] { 78, 237, 434, 12, 17 }, (uint)31, (uint)21)]
+        [InlineData((uint)80, new uint[] { 30, 2, 15, 4, 8 }, null, (uint)32)]
+        public void CarDevice_passIncorrectlyConfiguredModel_throwException(uint? id, uint[] pins, uint? impulsesPerRotation, uint? circumference)
+        {
+            //arrange
+            Mock<CarModel> carModelMock = new Mock<CarModel>();
+            carModelMock.Setup(x => x.getModelType()).Returns(ERobotsSymbols.car);
+            carModelMock.Setup(x => x.id).Returns(id);
+            carModelMock.Setup(x => x.pins).Returns(pins);
+            carModelMock.Setup(x => x.impulsesPerRotation).Returns(impulsesPerRotation);
+            carModelMock.Setup(x => x.circumference).Returns(circumference);
+
+            //act & assert
+            var ex = Assert.Throws<DeviceModelIncorrectSetupException>(() => new CarDevice(carModelMock.Object, null, null, null));
+            Assert.Equal("Some of properties in model are null", ex.Message);
+            Assert.Equal(id, ex.Data["id"]);
+            Assert.Equal(ERobotsSymbols.car, ex.Data["type"]);
+            Assert.Equal(pins, ex.Data["pins"]);
+            Assert.Equal(impulsesPerRotation, ex.Data["impulsesPerRotation"]);
+            Assert.Equal(circumference, ex.Data["circumference"]);
+        }
+
+        [Theory]
+        [InlineData((int)ERobotsSymbols.devID)]
+        [InlineData((int)ERobotsSymbols.pins)]
+        [InlineData((int)ERobotsSymbols.taskCarGo)]
+        [InlineData((int)ERobotsSymbols.valCarSpeed)]
+        [InlineData((int)ERobotsSymbols.nothingToDo)]
+        [InlineData((int)ERobotsSymbols.extraValuesNumber)]
+        public void CarDevice_passIncorrectModel_throwException(int devType)
+        {
+            //arrange
+            Mock<CarModel> carModelMock = new Mock<CarModel>();
+            carModelMock.Setup(x => x.getModelType()).Returns((ERobotsSymbols)devType);
+
+            //act & assert
+            var ex = Assert.Throws<DeviceModelIncorrectSetupException>(() => new CarDevice(carModelMock.Object, null, null, null));
+            Assert.Equal("Incorrect DeviceModel: expected CarModel", ex.Message);
+
+            Assert.Equal((ERobotsSymbols)devType, ex.Data["modelType"]);
+            Assert.Equal(ERobotsSymbols.car, ex.Data["exceptedModelType"]);
+            Assert.Equal(carModelMock.Object.ToString(), ex.Data["model"]);
+        }
+
+        [Theory]
+        [InlineData(new uint[] { 22, 23, 24, 31, 61, 42, 32, 11, 14, 12, 17, 990, 421 })]
+        [InlineData(new uint[] { 6, 100, 111, 222, 333, 87, 78, 43, 34, 5 })]
+        [InlineData(new uint[] { 78, 237, 434, 12, 17, 30, 2, 15, 4 })]
+        [InlineData(new uint[] { 1, 6, 43, 72, 13, 3, 2, 4, })]
+        [InlineData(new uint[] { 4, 6, 12, 15, 66, 21, 30 })]
+        [InlineData(new uint[] { 12, 13, 33, 15, 69, 82 })]
+        [InlineData(new uint[] { 23, 5, 7, 47 })]
+        [InlineData(new uint[] { 1, 4, 5 })]
+        [InlineData(new uint[] { 2, 56, })]
+        [InlineData(new uint[] { 71 })]
+        [InlineData(new uint[] { })]
+        public void CarDevice_passPinArrayWithIncorrectSize_throwException(uint[] pins)
+        {
+            //arrange
+            uint id = 16;
+            uint impulsesPerRotation = 87;
+            uint circumference = 42;
+
+            Mock<CarModel> carModelMock = new Mock<CarModel>();
+            carModelMock.Setup(x => x.getModelType()).Returns(ERobotsSymbols.car);
+            carModelMock.Setup(x => x.id).Returns(id);
+            carModelMock.Setup(x => x.pins).Returns(pins);
+            carModelMock.Setup(x => x.impulsesPerRotation).Returns(impulsesPerRotation);
+            carModelMock.Setup(x => x.circumference).Returns(circumference);
+
+            //act & assert
+            var ex = Assert.Throws<DeviceModelIncorrectSetupException>(() => new CarDevice(carModelMock.Object, null, null, null)); //carDevice should check input data before creating and sending message(thats why we don't need to mock delegates)
+            Assert.Equal("Car device model must have defined 5 pins", ex.Message);
+            Assert.Equal(id, ex.Data["id"]);
+            Assert.Equal(ERobotsSymbols.car, ex.Data["type"]);
+            Assert.Equal(pins, ex.Data["pins"]);
+            Assert.Equal(impulsesPerRotation, ex.Data["impulsesPerRotation"]);
+            Assert.Equal(circumference, ex.Data["circumference"]);
+        }
+
+
 
         //methods
 
