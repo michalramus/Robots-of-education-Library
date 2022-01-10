@@ -27,7 +27,7 @@ enum ERobotsSymbols
     valCarDistance,
     valCarRotationalSpeed,
     valCarAngle,
-    //TODO: delete calibration symbols
+    
     //calibration
     valCarImpulsesPerRotation, //impulses sent by hall sensor per one wheel rotation
     valCarCircumference, //circumference of wheel in centimeters
