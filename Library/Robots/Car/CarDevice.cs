@@ -118,7 +118,7 @@ namespace ROELibrary
             task.devID = id;
             task.devType = ERobotsSymbols.car;
             task.task = ERobotsSymbols.taskCarTurn;
-            task.AddExtraValue(ERobotsSymbols.valCarDistance, angle.ToString());
+            task.AddExtraValue(ERobotsSymbols.valCarAngle, angle.ToString());
 
             //send message
             msg.addMsgContainer(task);
