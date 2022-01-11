@@ -6,6 +6,13 @@ namespace ROELibrary
         //serialPort
         public string serialPortName = null;
         public uint? baudRate = 9600;
+        public uint? readBufferSize = 4096;
+        public uint? writeBufferSize = 4096;
+        
+        /// <summary>
+        /// in milliseconds
+        /// </summary>
+        public uint? readTimeout = 2000;
 
         //loging
         public bool logToDatabase = true;
@@ -18,6 +25,18 @@ namespace ROELibrary
                 return false;
             }
             else if (baudRate == null)
+            {
+                return false;
+            }
+            else if (readBufferSize == null)
+            {
+                return false;
+            }
+            else if (writeBufferSize == null)
+            {
+                return false;
+            }
+            else if (readTimeout == null)
             {
                 return false;
             }
