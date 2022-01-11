@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO.Ports;
 using System;
+using Serilog;
 
 namespace ROELibrary
 {
@@ -13,6 +14,10 @@ namespace ROELibrary
         SerialPort _serialPort;
         ISerialPort _serialPortFacade;
         ICommunication communication;
+
+        //logger
+        
+
         public Robot(Configure libraryConfig, VRobotModel[] robotsModels)
         {
             if (libraryConfig.isModelSetup() == false)
@@ -30,7 +35,14 @@ namespace ROELibrary
             _serialPort.ReadTimeout = (int)libraryConfig.readTimeout;
             _serialPort.Open();
 
+            if (libraryConfig.serialPort != null) //use custom serial port
+            {
+                _serialPortFacade = libraryConfig.serialPort;
+            }
+            else
+            {
             _serialPortFacade = new SerialPortFacade(_serialPort);
+            }
             communication = new SerialCommunication(_serialPortFacade);
 
 
