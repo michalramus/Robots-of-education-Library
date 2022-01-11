@@ -8,6 +8,12 @@ namespace ROELibrary
         public uint? baudRate = 9600;
         public uint? readBufferSize = 4096;
         public uint? writeBufferSize = 4096;
+
+        /// <summary>
+        /// Use different serial port. null - use standard serial port
+        /// only for development
+        /// </summary>
+        internal ISerialPort serialPort = null;
         
         /// <summary>
         /// in milliseconds
