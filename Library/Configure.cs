@@ -12,6 +12,7 @@ namespace ROELibrary
         /// <summary>
         /// Use different serial port. null - use standard serial port
         /// only for development
+        /// Note that correct configuration is checking first, so set every port properties
         /// </summary>
         internal ISerialPort serialPort = null;
         
