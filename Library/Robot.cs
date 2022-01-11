@@ -16,7 +16,6 @@ namespace ROELibrary
         ICommunication communication;
 
         //logger
-        
 
         public Robot(Configure libraryConfig, VRobotModel[] robotsModels)
         {
@@ -43,6 +42,7 @@ namespace ROELibrary
             {
             _serialPortFacade = new SerialPortFacade(_serialPort);
             }
+
             communication = new SerialCommunication(_serialPortFacade);
 
 
@@ -63,6 +63,15 @@ namespace ROELibrary
             try
             {
                 IRobotDevice car = RobotsFactory.getDeviceCreator(ERobotsSymbols.car)(model, sendMessage); //create car
+                if (cars.ContainsKey((int)model.getID()))
+                {
+                    var ex = new DeviceModelIncorrectSetupException("Id of car is not unique");
+                    ex.Data["modelType"] = model.getModelType();
+                    ex.Data["exceptedModelType"] = ERobotsSymbols.car;
+                    ex.Data["model"] = model.ToString();
+                    throw ex;
+                }
+
                 cars.Add((int)model.getID(), (ICarDevice)car);
             }
             catch (Exception ex)
