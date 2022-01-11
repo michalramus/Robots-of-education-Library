@@ -25,6 +25,9 @@ namespace ROELibrary
             _serialPort = new SerialPort();
             _serialPort.PortName = libraryConfig.serialPortName;
             _serialPort.BaudRate = (int)libraryConfig.baudRate;
+            _serialPort.ReadBufferSize = (int)libraryConfig.readBufferSize;
+            _serialPort.WriteBufferSize = (int)libraryConfig.writeBufferSize;
+            _serialPort.ReadTimeout = (int)libraryConfig.readTimeout;
             _serialPort.Open();
 
             _serialPortFacade = new SerialPortFacade(_serialPort);
