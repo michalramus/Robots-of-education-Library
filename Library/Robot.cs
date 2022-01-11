@@ -57,10 +57,68 @@ namespace ROELibrary
             }
         }
 
-       private void sendMessage(IMessage msg)
-       {
-           //TODO:
-       }
+        /// <summary>
+        /// send message and check response. If response is not correct, throw exception. 
+        /// If responce it is correct, execute it
+        /// </summary>
+        /// <param name="message"></param>
+        internal void sendMessage(IMessage message)
+        {
+            try
+            {
+                //send message
+                communication.SendMessage(message);
+
+                //receive message
+                IMessage response = MessageFactory.createMessage();
+                communication.ReceiveMessage(response);
+
+                //check messageType
+                List<IMessageContainer> responseContainers = response.GetMessageContainers();
+                switch (responseContainers[0].getContainerType())
+                {
+                    case EMessageSymbols.msgTypeInformation:
+                        executeInformationMessage(responseContainers);
+                        break;
+
+                    case EMessageSymbols.msgTypeError:
+                        executeErrorMessage(responseContainers);
+                        break;
+
+                    default:
+                        //TODO: log data and throw exception
+                        break;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                //TODO: log data 
+
+                throw;
+            }
+        }
+
+        //information
+        private void executeInformationMessage(List<IMessageContainer> informationContainers)
+        {
+            foreach (Information information in informationContainers)
+            {
+                foreach (InformationObject setting in information.settings)
+                {
+                    //TODO:
+                }
+            }
+        }
+
+        //error from response
+        private void executeErrorMessage(List<IMessageContainer> errorContainers)
+        {
+            foreach (Error error in errorContainers)
+            {
+                //TODO: log data and throw exception
+            }
+        }
     }
 }
 
