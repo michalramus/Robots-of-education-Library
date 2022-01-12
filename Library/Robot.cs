@@ -15,10 +15,10 @@ namespace ROELibrary
         ISerialPort _serialPortFacade;
         ICommunication communication;
 
-        //logger
-
         public Robot(Configure libraryConfig, VRobotModel[] robotsModels)
         {
+            setupLoggers();
+
             if (libraryConfig.isModelSetup() == false)
             {
                 //TODO: log data
@@ -26,6 +26,12 @@ namespace ROELibrary
             }
 
             //setup serial port
+            if (libraryConfig.serialPort != null) //use custom serial port
+            {
+                _serialPortFacade = libraryConfig.serialPort;
+            }
+            else
+            {
             _serialPort = new SerialPort();
             _serialPort.PortName = libraryConfig.serialPortName;
             _serialPort.BaudRate = (int)libraryConfig.baudRate;
@@ -34,13 +40,7 @@ namespace ROELibrary
             _serialPort.ReadTimeout = (int)libraryConfig.readTimeout;
             _serialPort.Open();
 
-            if (libraryConfig.serialPort != null) //use custom serial port
-            {
-                _serialPortFacade = libraryConfig.serialPort;
-            }
-            else
-            {
-            _serialPortFacade = new SerialPortFacade(_serialPort);
+                _serialPortFacade = new SerialPortFacade(_serialPort);
             }
 
             communication = new SerialCommunication(_serialPortFacade);
@@ -58,8 +58,21 @@ namespace ROELibrary
             }
         }
 
+        private void setupLoggers() //TODO
+        {
+        //     Log.Logger = new LoggerConfiguration()
+        //         .WriteTo.Console()
+        //         .CreateLogger();
+
+        //     Log.Logger = new LoggerConfiguration()
+        //         .MinimumLevel.Error()
+        //         .WriteTo.MySQL()
+        //         .CreateLogger();
+        }
+
         private void addCar(VRobotModel model)
         {
+            
             try
             {
                 IRobotDevice car = RobotsFactory.getDeviceCreator(ERobotsSymbols.car)(model, sendMessage); //create car
