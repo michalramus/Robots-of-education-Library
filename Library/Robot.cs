@@ -23,6 +23,7 @@ namespace ROELibrary
             {
                 //TODO: log data
                 //TODO: throw exception
+                throw new Exception();
             }
 
             //setup serial port
@@ -124,7 +125,8 @@ namespace ROELibrary
 
                     default:
                         //TODO: log data and throw exception
-                        break;
+                        throw new Exception();
+                        
                 }
 
             }
@@ -154,6 +156,7 @@ namespace ROELibrary
             foreach (Error error in errorContainers)
             {
                 //TODO: log data and throw exception
+                throw new Exception();
             }
         }
     }
