@@ -9,6 +9,11 @@ namespace ROELibrary
 
         //actions
         void goForward(uint distance);
-        void rotate(uint angle);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="angle"></param>
+        /// <param name="direction">0 - turn left; 1 - turn right</param>
+        void rotate(uint angle, bool direction);
     }
 }

@@ -126,7 +126,12 @@ namespace ROELibrary
 
         }
 
-        public void rotate(uint angle)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="angle"></param>
+        /// <param name="direction">0 - turn left; 1 - turn right</param>
+        public void rotate(uint angle, bool direction)
         {
             // create message
             IMessage msg = _createMessage();
@@ -137,6 +142,15 @@ namespace ROELibrary
             task.devType = ERobotsSymbols.car;
             task.task = ERobotsSymbols.taskCarTurn;
             task.AddExtraValue(ERobotsSymbols.valCarAngle, angle.ToString());
+            
+            if (direction == false)
+            {
+                task.AddExtraValue(ERobotsSymbols.valCarDirection, "left");
+            }
+            else
+            {
+                task.AddExtraValue(ERobotsSymbols.valCarDirection, "right");
+            }
 
             //send message
             msg.addMsgContainer(task);

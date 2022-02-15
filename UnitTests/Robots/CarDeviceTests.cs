@@ -235,24 +235,24 @@ namespace UnitTests.Robots
         }
 
         [Theory]
-        [InlineData((uint)33, (uint)84)]
-        [InlineData((uint)15, (uint)42)]
-        [InlineData((uint)40, (uint)21)]
-        [InlineData((uint)78, (uint)36)]
-        [InlineData((uint)0, (uint)845)]
-        [InlineData((uint)18, (uint)327)]
-        [InlineData((uint)423, (uint)43789)]
-        [InlineData((uint)44, (uint)4213750)]
-        [InlineData((uint)55, (uint)845)]
-        [InlineData((uint)99, (uint)4597)]
-        [InlineData((uint)1357954, (uint)348)]
-        [InlineData((uint)21, (uint)4239)]
-        [InlineData((uint)30, (uint)3000)]
-        [InlineData((uint)76, (uint)243)]
-        [InlineData((uint)64, (uint)660)]
-        [InlineData((uint)23, (uint)3238)]
-        [InlineData((uint)80, (uint)7)]
-        public void rotate_sendTaskMessage_sendMessage(uint? id, uint angle)
+        [InlineData((uint)33, (uint)84, false)]
+        [InlineData((uint)15, (uint)42, true)]
+        [InlineData((uint)40, (uint)21, true)]
+        [InlineData((uint)78, (uint)36, false)]
+        [InlineData((uint)0, (uint)845, true)]
+        [InlineData((uint)18, (uint)327, false)]
+        [InlineData((uint)423, (uint)43789, false)]
+        [InlineData((uint)44, (uint)4213750, false)]
+        [InlineData((uint)55, (uint)845, true)]
+        [InlineData((uint)99, (uint)4597, true)]
+        [InlineData((uint)1357954, (uint)348, true)]
+        [InlineData((uint)21, (uint)4239, true)]
+        [InlineData((uint)30, (uint)3000, false)]
+        [InlineData((uint)76, (uint)243, true)]
+        [InlineData((uint)64, (uint)660, false)]
+        [InlineData((uint)23, (uint)3238, false)]
+        [InlineData((uint)80, (uint)7, false)]
+        public void rotate_sendTaskMessage_sendMessage(uint? id, uint angle, bool direction)
         {
             //arrange
             uint[] pins = new uint[] { 1, 2, 3, 4, 5 };
@@ -284,13 +284,22 @@ namespace UnitTests.Robots
 
             //act
             CarDevice carDevice = new CarDevice(carModelMock.Object, messageMockCreator, createMessageContainerMock.Object, sendMessageMock.Object);
-            carDevice.rotate(angle);
+            carDevice.rotate(angle, direction);
 
             //assert
             taskMock.VerifySet(x => x.devID = id, Times.Exactly(2));
             taskMock.VerifySet(x => x.devType = devType, Times.Exactly(2));
             taskMock.VerifySet(x => x.task = task, Times.Once);
             taskMock.Verify(x => x.AddExtraValue(ERobotsSymbols.valCarAngle, angle.ToString()), Times.Once);
+
+            if (direction == true)
+            {
+                taskMock.Verify(x => x.AddExtraValue(ERobotsSymbols.valCarDirection, "right"), Times.Once);
+            }
+            else
+            {
+                taskMock.Verify(x => x.AddExtraValue(ERobotsSymbols.valCarDirection, "left"), Times.Once);
+            }
 
             messageMock.Verify(x => x.addMsgContainer(taskMock.Object), Times.Exactly(2)); //first to send extraValues, second to send task
 

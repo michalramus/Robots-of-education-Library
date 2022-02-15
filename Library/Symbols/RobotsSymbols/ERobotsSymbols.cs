@@ -27,7 +27,7 @@ enum ERobotsSymbols
     valCarDistance,
     valCarRotationalSpeed,
     valCarAngle,
-    
+    valCarDirection, //0 - left or forward; 1 - right or backward
     //calibration
     valCarImpulsesPerRotation, //impulses sent by hall sensor per one wheel rotation
     valCarCircumference, //circumference of wheel in centimeters
