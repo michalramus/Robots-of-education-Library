@@ -76,8 +76,8 @@ namespace ROELibrary
 
             try
             {
-                Func<VRobotModel, Action<IMessage>, IRobotDevice> aa = RobotsFactory.getDeviceCreator(ERobotsSymbols.car);
-                IRobotDevice car = aa(model, sendMessage); //create car
+                Func<VRobotModel, Action<IMessage>, IRobotDevice> carCreator = RobotsFactory.getDeviceCreator(ERobotsSymbols.car);
+                IRobotDevice car = carCreator(model, sendMessage); //create car
 
                 if (cars.ContainsKey((int)model.getID()))
                 {
