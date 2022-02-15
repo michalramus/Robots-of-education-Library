@@ -113,15 +113,15 @@ namespace ROELibrary
                 IMessage response = MessageFactory.createMessage();
                 communication.ReceiveMessage(response);
 
-                //check messageType
+                //check containerType
                 List<IMessageContainer> responseContainers = response.GetMessageContainers();
                 switch (responseContainers[0].getContainerType())
                 {
-                    case EMessageSymbols.msgTypeInformation:
+                    case EMessageSymbols.contTypeInformation:
                         executeReceivedInformationMessage(responseContainers);
                         break;
 
-                    case EMessageSymbols.msgTypeError:
+                    case EMessageSymbols.contTypeError:
                         executeReceivedErrorMessage(responseContainers);
                         break;
 
