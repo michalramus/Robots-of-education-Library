@@ -33,13 +33,13 @@ namespace ROELibrary
             }
             else
             {
-            _serialPort = new SerialPort();
-            _serialPort.PortName = libraryConfig.serialPortName;
-            _serialPort.BaudRate = (int)libraryConfig.baudRate;
-            _serialPort.ReadBufferSize = (int)libraryConfig.readBufferSize;
-            _serialPort.WriteBufferSize = (int)libraryConfig.writeBufferSize;
-            _serialPort.ReadTimeout = (int)libraryConfig.readTimeout;
-            _serialPort.Open();
+                _serialPort = new SerialPort();
+                _serialPort.PortName = libraryConfig.serialPortName;
+                _serialPort.BaudRate = (int)libraryConfig.baudRate;
+                _serialPort.ReadBufferSize = (int)libraryConfig.readBufferSize;
+                _serialPort.WriteBufferSize = (int)libraryConfig.writeBufferSize;
+                _serialPort.ReadTimeout = (int)libraryConfig.readTimeout;
+                _serialPort.Open();
 
                 _serialPortFacade = new SerialPortFacade(_serialPort);
             }
@@ -61,19 +61,19 @@ namespace ROELibrary
 
         private void setupLoggers() //TODO
         {
-        //     Log.Logger = new LoggerConfiguration()
-        //         .WriteTo.Console()
-        //         .CreateLogger();
+            //     Log.Logger = new LoggerConfiguration()
+            //         .WriteTo.Console()
+            //         .CreateLogger();
 
-        //     Log.Logger = new LoggerConfiguration()
-        //         .MinimumLevel.Error()
-        //         .WriteTo.MySQL()
-        //         .CreateLogger();
+            //     Log.Logger = new LoggerConfiguration()
+            //         .MinimumLevel.Error()
+            //         .WriteTo.MySQL()
+            //         .CreateLogger();
         }
 
         private void addCar(VRobotModel model)
         {
-            
+
             try
             {
                 Func<VRobotModel, Action<IMessage>, IRobotDevice> aa = RobotsFactory.getDeviceCreator(ERobotsSymbols.car);
@@ -128,7 +128,7 @@ namespace ROELibrary
                     default:
                         //TODO: log data and throw exception
                         throw new Exception();
-                        
+
                 }
 
             }
@@ -147,7 +147,15 @@ namespace ROELibrary
             {
                 foreach (InformationObject setting in informationContainer.settings)
                 {
-                    //TODO:
+                    switch (setting.setting)
+                    {
+                        case EInformationSymbols.isMessageReceived:
+                            if (setting.value != "true") //if message correctly received do nothing and continue program execution
+                            {
+                                //TODO: throw exception
+                            }
+                            break;
+                    }
                 }
             }
         }

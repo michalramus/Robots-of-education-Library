@@ -5,5 +5,6 @@ namespace ROELibrary
     enum EInformationSymbols
     {
         getFirmwareVersion,
+        isMessageReceived,
     }
 }
