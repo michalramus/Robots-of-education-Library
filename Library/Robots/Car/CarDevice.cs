@@ -110,6 +110,21 @@ namespace ROELibrary
 
         public void goForward(uint distance)
         {
+            go(distance, false);
+        }
+
+        public void goBackward(uint distance)
+        {
+            go(distance, true);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="distance"></param>
+        /// <param name="direction">0 - go forward; 1 - go backward</param>
+        private void go(uint distance, bool direction)
+        {
             //create message
             IMessage msg = _createMessage();
             Task task = _createMessageContainer(EMessageSymbols.msgTypeTask)() as Task;
@@ -119,6 +134,15 @@ namespace ROELibrary
             task.devType = ERobotsSymbols.car;
             task.task = ERobotsSymbols.taskCarGo;
             task.AddExtraValue(ERobotsSymbols.valCarDistance, distance.ToString());
+
+            if (direction == false)
+            {
+                task.AddExtraValue(ERobotsSymbols.valCarDirection, "forw");
+            }
+            else
+            {
+                task.AddExtraValue(ERobotsSymbols.valCarDirection, "back");
+            }
 
             //send message
             msg.addMsgContainer(task);

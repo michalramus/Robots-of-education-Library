@@ -227,6 +227,71 @@ namespace UnitTests.Robots
             taskMock.VerifySet(x => x.devType = devType, Times.Exactly(2));
             taskMock.VerifySet(x => x.task = task, Times.Once);
             taskMock.Verify(x => x.AddExtraValue(ERobotsSymbols.valCarDistance, distance.ToString()), Times.Once);
+            taskMock.Verify(x => x.AddExtraValue(ERobotsSymbols.valCarDirection, "forw"), Times.Once);
+
+            messageMock.Verify(x => x.addMsgContainer(taskMock.Object), Times.Exactly(2)); //first to send extraValues, second to send task
+
+            sendMessageMock.Verify(x => x(messageMock.Object), Times.Exactly(3)); //first to send config message, second to send extraValues, third to send task
+
+        }
+
+        [Theory]
+        [InlineData((uint)15, (uint)42)]
+        [InlineData((uint)40, (uint)21)]
+        [InlineData((uint)78, (uint)36)]
+        [InlineData((uint)0, (uint)845)]
+        [InlineData((uint)18, (uint)327)]
+        [InlineData((uint)423, (uint)43789)]
+        [InlineData((uint)44, (uint)4213750)]
+        [InlineData((uint)55, (uint)845)]
+        [InlineData((uint)99, (uint)4597)]
+        [InlineData((uint)1357954, (uint)348)]
+        [InlineData((uint)21, (uint)4239)]
+        [InlineData((uint)30, (uint)3000)]
+        [InlineData((uint)76, (uint)243)]
+        [InlineData((uint)64, (uint)660)]
+        [InlineData((uint)23, (uint)3238)]
+        [InlineData((uint)80, (uint)7)]
+        public void goBackward_sendTaskMessage_sendMessage(uint? id, uint distance)
+        {
+            //arrange
+            uint[] pins = new uint[] { 1, 2, 3, 4, 5 };
+            uint impulsesPerRotation = 31;
+            uint circumference = 88;
+
+            ERobotsSymbols devType = ERobotsSymbols.car;
+            ERobotsSymbols task = ERobotsSymbols.taskCarGo;
+
+            Mock<CarModel> carModelMock = new Mock<CarModel>();
+            carModelMock.Setup(x => x.getModelType()).Returns(devType);
+            carModelMock.Setup(x => x.id).Returns(id);
+            carModelMock.Setup(x => x.pins).Returns(pins);
+            carModelMock.Setup(x => x.impulsesPerRotation).Returns(impulsesPerRotation);
+            carModelMock.Setup(x => x.circumference).Returns(circumference);
+
+            Mock<Device> deviceMock = new Mock<Device>().SetupProperty(x => x.pins, new List<uint>());
+            Mock<Task> taskMock = new Mock<Task>();
+            taskMock.Setup(x => x.AddExtraValue(It.IsAny<ERobotsSymbols>(), It.IsAny<string>()));
+
+            var createMessageContainerMock = new Mock<Func<EMessageSymbols, Func<IMessageContainer>>>();
+            createMessageContainerMock.Setup(x => x(EMessageSymbols.msgTypeConfig)).Returns(() => deviceMock.Object);
+            createMessageContainerMock.Setup(x => x(EMessageSymbols.msgTypeTask)).Returns(() => taskMock.Object);
+
+            Mock<IMessage> messageMock = new Mock<IMessage>();
+            Func<IMessage> messageMockCreator = () => messageMock.Object;
+
+            Mock<Action<IMessage>> sendMessageMock = new Mock<Action<IMessage>>();
+
+            //act
+            CarDevice carDevice = new CarDevice(carModelMock.Object, messageMockCreator, createMessageContainerMock.Object, sendMessageMock.Object);
+            carDevice.goBackward(distance);
+
+            //assert
+            taskMock.VerifySet(x => x.devID = id, Times.Exactly(2));
+            taskMock.VerifySet(x => x.devType = devType, Times.Exactly(2));
+            taskMock.VerifySet(x => x.task = task, Times.Once);
+            taskMock.Verify(x => x.AddExtraValue(ERobotsSymbols.valCarDistance, distance.ToString()), Times.Once);
+            taskMock.Verify(x => x.AddExtraValue(ERobotsSymbols.valCarDirection, "back"), Times.Once);
 
             messageMock.Verify(x => x.addMsgContainer(taskMock.Object), Times.Exactly(2)); //first to send extraValues, second to send task
 
