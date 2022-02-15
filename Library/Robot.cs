@@ -143,9 +143,9 @@ namespace ROELibrary
         //information
         private void executeReceivedInformationMessage(List<IMessageContainer> informationContainers)
         {
-            foreach (Information information in informationContainers)
+            foreach (Information informationContainer in informationContainers)
             {
-                foreach (InformationObject setting in information.settings)
+                foreach (InformationObject setting in informationContainer.settings)
                 {
                     //TODO:
                 }
