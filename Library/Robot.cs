@@ -76,7 +76,9 @@ namespace ROELibrary
             
             try
             {
-                IRobotDevice car = RobotsFactory.getDeviceCreator(ERobotsSymbols.car)(model, sendMessage); //create car
+                Func<VRobotModel, Action<IMessage>, IRobotDevice> aa = RobotsFactory.getDeviceCreator(ERobotsSymbols.car);
+                IRobotDevice car = aa(model, sendMessage); //create car
+
                 if (cars.ContainsKey((int)model.getID()))
                 {
                     var ex = new DeviceModelIncorrectSetupException("Id of car is not unique");
@@ -116,11 +118,11 @@ namespace ROELibrary
                 switch (responseContainers[0].getContainerType())
                 {
                     case EMessageSymbols.msgTypeInformation:
-                        executeInformationMessage(responseContainers);
+                        executeReceivedInformationMessage(responseContainers);
                         break;
 
                     case EMessageSymbols.msgTypeError:
-                        executeErrorMessage(responseContainers);
+                        executeReceivedErrorMessage(responseContainers);
                         break;
 
                     default:
@@ -139,7 +141,7 @@ namespace ROELibrary
         }
 
         //information
-        private void executeInformationMessage(List<IMessageContainer> informationContainers)
+        private void executeReceivedInformationMessage(List<IMessageContainer> informationContainers)
         {
             foreach (Information information in informationContainers)
             {
@@ -151,7 +153,7 @@ namespace ROELibrary
         }
 
         //error from response
-        private void executeErrorMessage(List<IMessageContainer> errorContainers)
+        private void executeReceivedErrorMessage(List<IMessageContainer> errorContainers)
         {
             foreach (Error error in errorContainers)
             {
