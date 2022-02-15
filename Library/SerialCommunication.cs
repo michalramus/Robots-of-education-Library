@@ -40,7 +40,7 @@ namespace ROELibrary
                 if (_serialPort.IsOpen() == true)
                 {
                     //read message
-                    if (_serialPort.BytesToRead() > 0)
+                    if (_serialPort.BytesToRead() >= 2)
                     {
                             json = _serialPort.ReadLine();
                             messageReceived = true;
