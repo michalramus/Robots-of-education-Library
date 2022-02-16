@@ -2,12 +2,22 @@ namespace ROELibrary
 {
     public interface ICarDevice : IRobotDevice
     {
-        //config
+        //CONFIG
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="speed">in precents</param>
         void setSpeed(uint speed);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="speed">speed in precents</param>
         void setRotationalSpeed(uint speed);
 
 
-        //actions
+        //ACTIONS
 
         /// <summary>
         /// 
