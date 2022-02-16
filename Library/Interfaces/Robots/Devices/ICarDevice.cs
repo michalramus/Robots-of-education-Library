@@ -35,7 +35,7 @@ namespace ROELibrary
         /// 
         /// </summary>
         /// <param name="angle">unit is degrees</param>
-        /// <param name="direction">0 - turn left; 1 - turn right</param>
+        /// <param name="direction">0(false) - turn left; 1(true) - turn right</param>
         void rotate(uint angle, bool direction);
     }
 }
