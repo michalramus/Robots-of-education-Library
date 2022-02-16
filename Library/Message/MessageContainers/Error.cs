@@ -7,9 +7,9 @@ namespace ROELibrary
     class Error : IMessageContainerToReceive
     {
         public EErrorSymbols errorType { get; private set; }
-        public string message { get; private set; }
-        public string value { get; private set; } //data that might have to caused the error
-        public string firmwareVersion { get; private set; }
+        public string message { get; private set; } = null;
+        public string value { get; private set; } = null; //data that might have to caused the error
+        public string firmwareVersion { get; private set; } = null;
         public EMessageSymbols getContainerType()
         {
             return EMessageSymbols.contTypeError;

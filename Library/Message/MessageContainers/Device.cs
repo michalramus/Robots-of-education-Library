@@ -5,15 +5,7 @@ namespace ROELibrary
 {
     class Device : VMessageContainer, IMessageContainerToSend
     {
-        public Device()
-        {
-            devID = null;
-            devType = null;
-
-            pins = new List<uint>();
-        }
-
-        public List<uint> pins { get; set; } //pins used by this device
+        public virtual List<uint> pins { get; set; } = new List<uint>(); //pins used by this device
 
         public EMessageSymbols getContainerType()
         {

@@ -5,23 +5,17 @@ namespace ROELibrary
 {
     class Task : VMessageContainer, IMessageContainerToSend
     {
+        public virtual ERobotsSymbols? task { get; set; } = null;
+        public virtual int extraValuesNumber { get; private set; } = 0;
+        public virtual Dictionary<ERobotsSymbols, string> extraValues { get; private set; } = new Dictionary<ERobotsSymbols, string>();
 
-        public Task()
-        {
-            this.extraValuesNumber = 0;
-            this.extraValues = new Dictionary<ERobotsSymbols, string>();
-        }
 
         public EMessageSymbols getContainerType()
         {
             return EMessageSymbols.contTypeTask;
         }
 
-        public ERobotsSymbols? task { get; set; }
-        public int extraValuesNumber { get; private set; }
-        public Dictionary<ERobotsSymbols, string> extraValues { get; private set; }
-
-        public void AddExtraValue(ERobotsSymbols valueID, string value)
+        public virtual void AddExtraValue(ERobotsSymbols valueID, string value)
         {
             extraValues.Add(valueID, value);
             extraValuesNumber++;

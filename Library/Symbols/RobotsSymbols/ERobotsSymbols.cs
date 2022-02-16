@@ -13,7 +13,7 @@ enum ERobotsSymbols
     task,
     extraValuesNumber,
     extraValues,
-
+    nothingToDo, //special task to send only extra values
 
     //symbols for concrete robot
 
@@ -26,10 +26,11 @@ enum ERobotsSymbols
     valCarSpeed,
     valCarDistance,
     valCarRotationalSpeed,
-    valCarDirection,
+    valCarAngle,
+    valCarDirection, //0 - left or forward; 1 - right or backward
     //calibration
-    valCarGoTime, //time when car ride 1 meter
-    valCarTurnTime, //time when car turn 90 degrees
+    valCarImpulsesPerRotation, //impulses sent by hall sensor per one wheel rotation
+    valCarCircumference, //circumference of wheel in centimeters
 
 
 }

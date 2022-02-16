@@ -19,6 +19,7 @@ namespace ROELibrary
                 {ERobotsSymbols.task, "task"},
                 {ERobotsSymbols.extraValuesNumber, "exValNum"},
                 {ERobotsSymbols.extraValues, "exVal"},
+                {ERobotsSymbols.nothingToDo, "nothing"},
 
 
                 //symbols for concrete robot
@@ -31,10 +32,11 @@ namespace ROELibrary
                 {ERobotsSymbols.valCarSpeed, "vCarSpeed"},
                 {ERobotsSymbols.valCarDistance, "vCarDist"},
                 {ERobotsSymbols.valCarRotationalSpeed, "vCarRotSpeed"},
-                {ERobotsSymbols.valCarDirection, "vCarDirec"},
+                {ERobotsSymbols.valCarAngle, "vCarAngle"},
+                {ERobotsSymbols.valCarDirection, "vCarDirect"},
 
-                {ERobotsSymbols.valCarGoTime, "vCarGoTime"},
-                {ERobotsSymbols.valCarTurnTime, "vCarTurnTime"},
+                {ERobotsSymbols.valCarImpulsesPerRotation, "vCarImpPerRot"},
+                {ERobotsSymbols.valCarCircumference, "vCarCircumf"},
             }
         );
     }

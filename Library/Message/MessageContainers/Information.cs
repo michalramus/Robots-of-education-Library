@@ -6,12 +6,7 @@ namespace ROELibrary
 {
     class Information : IMessageContainerToSendArray, IMessageContainerToReceiveArray
     {
-        public List<InformationObject> settings { get; private set; } //list of all settings in this information object
-
-        public Information()
-        {
-            settings = new List<InformationObject>();
-        }
+        public List<InformationObject> settings { get; private set; } = new List<InformationObject>(); //list of all settings in this information object
 
         public EMessageSymbols getContainerType()
         {
