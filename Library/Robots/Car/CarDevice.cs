@@ -9,7 +9,7 @@ namespace ROELibrary
         uint[] pins = null; // [en1][en2][en3][en4][speedControl-analogPin]
         uint impulsesPerRotation = 0; // impulses sent by hall sensor per one wheel rotation
         uint circumference = 0; // circumference of wheel in centimeters
-                               //TODO: create unit tests
+
 
         //creators
         Func<IMessage> _createMessage = null;
@@ -166,7 +166,7 @@ namespace ROELibrary
             task.devType = ERobotsSymbols.car;
             task.task = ERobotsSymbols.taskCarTurn;
             task.AddExtraValue(ERobotsSymbols.valCarAngle, angle.ToString());
-            
+
             if (direction == false)
             {
                 task.AddExtraValue(ERobotsSymbols.valCarDirection, "left");
