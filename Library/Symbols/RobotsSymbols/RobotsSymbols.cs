@@ -36,7 +36,7 @@ namespace ROELibrary
                 {ERobotsSymbols.valCarDirection, "vCarDirect"},
 
                 {ERobotsSymbols.valCarImpulsesPerRotation, "vCarImpPerRot"},
-                {ERobotsSymbols.valCarCircumference, "vCarCircumference"},
+                {ERobotsSymbols.valCarCircumference, "vCarCircumf"},
             }
         );
     }
