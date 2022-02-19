@@ -53,6 +53,10 @@ namespace ROELibrary
                 }
             }
 
+            //remove every enter characters
+            json = json.Replace("\r", "")
+                        .Replace("\n", "");
+
             //check if message was correctly received
             if ((json[0] == MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage)[0]) && (json[json.Length - 1] == MessageSymbols.symbols.getValue(EMessageSymbols.startEndMessage)[0]))
             {
