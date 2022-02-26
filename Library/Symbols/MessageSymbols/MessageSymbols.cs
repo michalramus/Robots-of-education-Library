@@ -8,7 +8,7 @@ namespace ROELibrary
         public static Symbols<EMessageSymbols> symbols = new Symbols<EMessageSymbols>(
             new Dictionary<EMessageSymbols, string>
             {
-                {EMessageSymbols.startEndMessage, "x"}, //it has to have maximally 1 character
+                {EMessageSymbols.startEndMessage, "~"}, //it has to have maximally 1 character
                 {EMessageSymbols.messageType, "type"},
 
                 {EMessageSymbols.msgTypeConfig, "conf"},
