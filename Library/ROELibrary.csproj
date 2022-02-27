@@ -2,6 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <VersionSuffix>prev</VersionSuffix>
+    <GenerateDocumentation>true</GenerateDocumentation>
+  
+    <PackageId>ROELibrary</PackageId>
+    <Title>Robots-of-Education-Library</Title>
+    <Authors>Michal Ramus</Authors>
+    <Owners>Michal123456747</Owners>
+    <Company>Robots of Education (Roboty Edukacji)</Company>
+    <Description>Create own robot. Package for controling robots of Robots of Education project.</Description>
+    <PackageProjectUrl>https://roboty-edukacji.pl</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Michal123456747/Robots-of-education-Library</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
